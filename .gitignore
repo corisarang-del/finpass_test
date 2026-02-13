@@ -1,0 +1,4 @@
+.mcp.json
+.claude/
+finpass-web/.claude/
+*.local.json
