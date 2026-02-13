@@ -1,0 +1,11 @@
+{
+  "installCommand": "pnpm install --dir finpass-web",
+  "buildCommand": "pnpm --dir finpass-web build",
+  "outputDirectory": "finpass-web/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
