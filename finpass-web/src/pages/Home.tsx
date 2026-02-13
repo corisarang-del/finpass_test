@@ -10,11 +10,15 @@ import 기초자산Image from '../assets/images/기초자산.png';
 import 주식Image from '../assets/images/주식.png';
 import 라이프Image from '../assets/images/라이프.png';
 
+const HERO_BACKGROUNDS = [home1, home2, home3];
+const CATEGORY_BACKGROUNDS = [부동산Image, 기초자산Image, 주식Image, 라이프Image];
+
 const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const fromOnboarding = (location.state as { fromOnboarding?: boolean } | undefined)?.fromOnboarding === true;
   const [sequenceStep, setSequenceStep] = useState(fromOnboarding ? 3 : 0);
+  const [isHeroReady, setIsHeroReady] = useState(fromOnboarding);
 
   const categories = [
     { id: 'real-estate', title: '부동산', sub: '현실 점검', desc: '내 집 마련', image: 부동산Image },
@@ -24,7 +28,42 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    if (sequenceStep < 3) {
+    if (fromOnboarding) return undefined;
+
+    let cancelled = false;
+    const firstImage = new Image();
+    const fallbackTimer = window.setTimeout(() => {
+      if (!cancelled) setIsHeroReady(true);
+    }, 1200);
+
+    firstImage.onload = () => {
+      if (!cancelled) setIsHeroReady(true);
+      window.clearTimeout(fallbackTimer);
+    };
+    firstImage.onerror = () => {
+      if (!cancelled) setIsHeroReady(true);
+      window.clearTimeout(fallbackTimer);
+    };
+    firstImage.src = home1;
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallbackTimer);
+    };
+  }, [fromOnboarding]);
+
+  useEffect(() => {
+    const allImages = [...HERO_BACKGROUNDS, ...CATEGORY_BACKGROUNDS];
+    allImages.forEach((src, index) => {
+      const preload = new Image();
+      preload.decoding = 'async';
+      if (index < 2) preload.loading = 'eager';
+      preload.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (sequenceStep < 3 && isHeroReady) {
       const timer = setTimeout(() => {
         if (sequenceStep === 2) {
           navigate('/onboarding');
@@ -35,7 +74,7 @@ const Home = () => {
       return () => clearTimeout(timer);
     }
     return undefined;
-  }, [sequenceStep, navigate]);
+  }, [sequenceStep, navigate, isHeroReady]);
 
   const heroContent = [
     { id: 0, title: '당신의 삶을 데이터로 읽다', tag: 'DATA INTELLIGENCE', bgImage: home1 },
@@ -50,7 +89,7 @@ const Home = () => {
   return (
     <div className="h-screen w-screen bg-black text-white font-sans overflow-hidden fixed inset-0">
       <AnimatePresence mode="popLayout">
-        {sequenceStep < 3 && (
+        {sequenceStep < 3 && isHeroReady && (
           <motion.div
             key={currentContent.id}
             initial={{ opacity: 0, scale: 1.08 }}
@@ -102,7 +141,7 @@ const Home = () => {
       </nav>
 
       <AnimatePresence mode="wait">
-        {sequenceStep < 3 && (
+        {sequenceStep < 3 && isHeroReady && (
           <div
             style={{
               position: 'fixed',
@@ -236,6 +275,17 @@ const Home = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {!isHeroReady && sequenceStep < 3 && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 55,
+            background: 'radial-gradient(circle at 50% 30%, #1a2441 0%, #0a0f1e 55%, #04070f 100%)',
+          }}
+        />
+      )}
     </div>
   );
 };
