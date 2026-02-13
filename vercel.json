@@ -4,7 +4,7 @@
   "outputDirectory": "finpass-web/dist",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!.*\\..*).*)",
       "destination": "/index.html"
     }
   ]
