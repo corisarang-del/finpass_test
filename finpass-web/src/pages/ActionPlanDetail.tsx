@@ -60,9 +60,21 @@ const GUIDE_IMAGES: Record<string, string> = {
 const cardStyle: React.CSSProperties = {
   background: '#fff',
   borderRadius: 22,
-  border: '1px solid #e7ebf3',
+  border: '1px solid #dbe2ec',
   padding: 16,
   boxShadow: '0 10px 28px rgba(10, 23, 53, 0.05)',
+};
+const displayFont = "'Cormorant Garamond', 'Noto Serif KR', 'Times New Roman', serif";
+const primaryButtonStyle: React.CSSProperties = {
+  border: 'none',
+  borderRadius: 22,
+  background: '#1e2f49',
+  color: '#fff',
+  fontWeight: 900,
+  fontSize: 16,
+  padding: '16px 12px',
+  cursor: 'pointer',
+  boxShadow: '0 8px 18px rgba(20, 33, 58, 0.22)',
 };
 
 const formatAsset = (value: number) => (value >= 100000000 ? `${(value / 100000000).toFixed(1)}억원` : `${Math.round(value / 10000).toLocaleString()}만원`);
@@ -324,7 +336,7 @@ const ActionPlanDetail = () => {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff', padding: '18px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #eef2f7 100%)', padding: '18px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 860, margin: '0 auto', display: 'grid', gap: 14 }}>
         <header style={{ ...cardStyle, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <button type="button" onClick={() => navigate(-1)} style={{ border: '1px solid #d9deea', borderRadius: 999, background: '#fff', color: '#38415a', fontWeight: 800, fontSize: 14, padding: '8px 12px', cursor: 'pointer', display: 'inline-flex', gap: 6, alignItems: 'center' }}>
@@ -335,7 +347,7 @@ const ActionPlanDetail = () => {
 
         <section style={{ ...cardStyle, background: '#0f1c3d', color: '#fff' }}>
           <p style={{ margin: 0, color: '#8edbc7', fontSize: 12, fontWeight: 700 }}>SELECTED ACTION PLAN</p>
-          <h1 style={{ margin: '8px 0 0', fontSize: 36, lineHeight: 1.2, fontWeight: 900 }}>{item.title}</h1>
+          <h1 style={{ margin: '8px 0 0', fontSize: 36, lineHeight: 1.2, fontWeight: 900, fontFamily: displayFont }}>{item.title}</h1>
           <p style={{ margin: '6px 0 0', color: '#d8e1f4', fontSize: 13, fontWeight: 700 }}>{scenario.headline}</p>
           <p style={{ margin: '8px 0 0', color: '#b8c4df', fontSize: 15 }}>{item.description}</p>
           <p style={{ margin: '10px 0 0', color: '#d8e1f4', fontSize: 14, fontWeight: 700 }}>{item.impact}</p>
@@ -419,7 +431,7 @@ const ActionPlanDetail = () => {
           </div>
         </section>
 
-        <button type="button" onClick={() => navigate('/final-analysis', { state: routeState })} style={{ border: 'none', borderRadius: 999, background: '#101d40', color: '#fff', fontWeight: 900, fontSize: 16, padding: '14px 12px', cursor: 'pointer' }}>
+        <button type="button" onClick={() => navigate('/final-analysis', { state: routeState })} style={primaryButtonStyle}>
           액션 플랜 목록으로 돌아가기
         </button>
       </main>

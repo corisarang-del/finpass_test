@@ -1,11 +1,11 @@
-﻿import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CheckCircle2, House, LineChart, ShieldCheck, RotateCcw, Bot } from 'lucide-react';
+import { Share2, RotateCcw, Mountain, ShieldCheck, TrendingUp, Sparkles } from 'lucide-react';
 import agentHanImg from '../assets/images/agent_han.png';
 import agentSongImg from '../assets/images/agent_song.png';
 import agentChoiImg from '../assets/images/agent_choi.png';
 import agentYouImg from '../assets/images/agent_you.png';
-import { GUIDE_PROFILES, getFinalGuideComment } from '../lib/plannerProfile';
+import { getFinalGuideComment, GUIDE_PROFILES } from '../lib/plannerProfile';
 
 interface SimulationSnapshot {
   financialIndependenceAge: number | null;
@@ -20,24 +20,7 @@ interface FinalRouteState {
   simulationSnapshot?: SimulationSnapshot;
 }
 
-interface ActionPlanItem {
-  title: string;
-  description: string;
-  impact: string;
-  icon: 'house' | 'line' | 'shield';
-  selected?: boolean;
-}
-
-interface ActionPlanDetailState {
-  item: ActionPlanItem;
-  categoryId: string;
-  answers: Record<string, unknown>;
-  simulationSnapshot: SimulationSnapshot;
-  actionIndex: number;
-}
-
 const EMPTY_ANSWERS: Record<string, unknown> = {};
-
 const GUIDE_IMAGES: Record<string, string> = {
   han: agentHanImg,
   song: agentSongImg,
@@ -45,55 +28,38 @@ const GUIDE_IMAGES: Record<string, string> = {
   you: agentYouImg,
 };
 
-const formatAsset = (value: number) => (value >= 100000000 ? `${(value / 100000000).toFixed(1)}억원` : `${Math.round(value / 10000).toLocaleString()}만원`);
-const toYearMonth = (months: number) => `${Math.floor(months / 12)}년 ${months % 12}개월`;
+const formatAsset = (value: number) => `${(value / 100000000).toFixed(2)}억`;
+const displayFont = "'Cormorant Garamond', 'Noto Serif KR', 'Times New Roman', serif";
 
 const cardStyle: React.CSSProperties = {
   background: '#fff',
   borderRadius: 22,
-  border: '1px solid #e7ebf3',
+  border: '1px solid #dbe2ec',
   padding: 16,
   boxShadow: '0 10px 28px rgba(10, 23, 53, 0.05)',
 };
 
-const planByCategory = (categoryId: string, answers: Record<string, unknown>): ActionPlanItem[] => {
-  const picked = String(answers.l3 ?? answers.r6 ?? answers.s5 ?? answers.i5 ?? '');
-
-  if (categoryId === 'real-estate') {
-    return [
-      { title: 'ISA 계좌 활용하기', description: '비과세 혜택으로 실수익률을 올리고 주거자금 이전까지 운용해.', impact: '은퇴 시점 1.2년 단축', icon: 'house', selected: true },
-      { title: '연금 저축 펀드', description: '세액공제 구간을 먼저 채우는 방식으로 연간 수익률을 높여.', impact: '연 5개월 단축', icon: 'line' },
-      { title: '비상금 확보', description: '생활비 6개월치를 분리해서 예외 상황에도 계획을 유지해.', impact: '리스크 관리', icon: 'shield' },
-    ];
-  }
-
-  if (categoryId === 'insurance') {
-    return [
-      { title: '중복 보험 정리', description: '보장 중복 항목부터 정리해 고정비를 낮춰.', impact: '월 5~15만원 절감', icon: 'shield', selected: true },
-      { title: '현금흐름 통장 분리', description: '생활비와 저축/투자 계좌를 분리해 자동화해.', impact: '실행 유지력 상승', icon: 'house' },
-      { title: '연금 자동 납입', description: '매월 자동이체로 장기 복리 구조를 고정해.', impact: '장기 안정성 강화', icon: 'line' },
-    ];
-  }
-
-  if (categoryId === 'stock') {
-    return [
-      { title: '핵심 ETF 비중 확대', description: '개별 테마 비중을 줄이고 분산 ETF를 중심으로 유지해.', impact: '변동성 완화', icon: 'line', selected: true },
-      { title: `${picked || '관심 테마'} 비중 제한`, description: '관심 종목은 전체 자산의 20% 이하로만 가져가.', impact: '쏠림 방지', icon: 'house' },
-      { title: '손실 허용 구간 룰', description: '손실 구간별로 리밸런싱 규칙을 미리 정해.', impact: '하락장 방어', icon: 'shield' },
-    ];
-  }
-
-  return [
-    { title: '작은 습관 1개 고정', description: `${picked || '지출 절감 항목'}부터 월 고정 루틴으로 만들자.`, impact: '목표 시점 단축', icon: 'house', selected: true },
-    { title: '월간 점검 루틴', description: '수입/지출/저축률을 월 1회 점검해서 이탈을 줄여.', impact: '지속 가능성 개선', icon: 'line' },
-    { title: '에너지 보호 규칙', description: '번아웃 구간을 방지해서 계획을 끝까지 유지해.', impact: '실행 유지력 강화', icon: 'shield' },
-  ];
+const primaryButtonStyle: React.CSSProperties = {
+  border: 'none',
+  borderRadius: 22,
+  background: '#1e2f49',
+  color: '#fff',
+  fontWeight: 900,
+  fontSize: 16,
+  padding: '16px 12px',
+  cursor: 'pointer',
+  boxShadow: '0 8px 18px rgba(20, 33, 58, 0.22)',
 };
 
-const IconByType = ({ type }: { type: ActionPlanItem['icon'] }) => {
-  if (type === 'house') return <House size={18} color="#111f45" />;
-  if (type === 'line') return <LineChart size={18} color="#0c6f5b" />;
-  return <ShieldCheck size={18} color="#385a9b" />;
+const secondaryButtonStyle: React.CSSProperties = {
+  border: '1px solid #d1d8e5',
+  borderRadius: 22,
+  background: '#fff',
+  color: '#38415a',
+  fontWeight: 800,
+  fontSize: 16,
+  padding: '16px 12px',
+  cursor: 'pointer',
 };
 
 const FinalAnalysis = () => {
@@ -103,6 +69,7 @@ const FinalAnalysis = () => {
 
   const categoryId = routeState.categoryId ?? 'real-estate';
   const answers = routeState.answers ?? EMPTY_ANSWERS;
+  const name = String(answers.c1 ?? '사용자');
   const guide = GUIDE_PROFILES[categoryId] ?? GUIDE_PROFILES['real-estate'];
   const guideImage = GUIDE_IMAGES[guide.key] ?? agentHanImg;
 
@@ -113,95 +80,150 @@ const FinalAnalysis = () => {
     monthlySavings: 0,
   };
 
-  const roadmap = useMemo(() => planByCategory(categoryId, answers), [categoryId, answers]);
-  const monthsToGoal = snapshot.monthlySavings > 0 ? Math.ceil(Math.max(0, snapshot.targetAsset - snapshot.targetAsset * (snapshot.achievementRate / 100)) / snapshot.monthlySavings) : null;
   const finalComment = getFinalGuideComment(categoryId, answers);
+  const [shareMessage, setShareMessage] = useState('');
+
+  const yearlyRoadmap = useMemo(() => {
+    const baseAsset = snapshot.targetAsset * (snapshot.achievementRate / 100);
+    return [1, 2, 3, 4, 5].map((year) => {
+      const asset = Math.max(0, Math.round(baseAsset + snapshot.monthlySavings * 12 * year));
+      const increase = Math.max(0, Math.round(snapshot.monthlySavings * 12 * year));
+      return { year, asset, increase };
+    });
+  }, [snapshot]);
+
+  const projectedAsset5Y = yearlyRoadmap[4]?.asset ?? snapshot.targetAsset;
+
+  const onShareVisionCard = async () => {
+    const text = `${name} 님 미래 자산 등고선\n달성률 ${snapshot.achievementRate}%\n5년 뒤 자산 ${formatAsset(projectedAsset5Y)}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: 'FinPass 미래 자산 등고선', text });
+        setShareMessage('공유가 완료되었습니다.');
+        return;
+      }
+      await navigator.clipboard.writeText(text);
+      setShareMessage('공유 문구를 복사했습니다.');
+    } catch {
+      setShareMessage('공유를 완료하지 못했습니다. 다시 시도해 주세요.');
+    }
+  };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff', padding: '18px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #eef2f7 100%)', padding: '18px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 420, margin: '0 auto', display: 'grid', gap: 14 }}>
-        <section style={{ ...cardStyle, textAlign: 'center', padding: '20px 16px' }}>
-          <div style={{ width: 58, height: 58, margin: '0 auto', borderRadius: 999, background: 'linear-gradient(120deg,#9cebd9,#4acbb2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <CheckCircle2 size={30} color="#0f3e3a" />
+        <section style={{ ...cardStyle, padding: 20 }}>
+          <p style={{ margin: 0, color: '#6b7da7', fontWeight: 900, fontSize: 12, letterSpacing: '0.08em' }}>5-YEAR ASSET ROADMAP</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10, marginTop: 4 }}>
+            <h1 style={{ margin: 0, fontSize: 45, lineHeight: 1.1, color: '#101c3f', fontWeight: 900, fontFamily: displayFont, letterSpacing: '-0.01em' }}>
+              {name} 님의
+              <br />
+              미래 자산 등고선
+            </h1>
+            <div style={{ borderRadius: 14, border: '1px solid #d5deef', background: '#f6f9ff', padding: '8px 10px', textAlign: 'center' }}>
+              <p style={{ margin: 0, fontSize: 11, color: '#8693b0', fontWeight: 700 }}>목표 도달률</p>
+              <p style={{ margin: '2px 0 0', color: '#3d66df', fontSize: 28, fontWeight: 900 }}>{snapshot.achievementRate}%</p>
+            </div>
           </div>
-          <h1 style={{ margin: '12px 0 0', fontSize: 38, lineHeight: 1.15, color: '#161d2f', fontWeight: 900 }}>최적의 액션 플랜이<br /><span style={{ color: '#0f7d68' }}>준비됐습니다</span></h1>
-          <p style={{ margin: '8px 0 0', color: '#758099' }}>시뮬레이션 결과를 기반으로 실행순서를 정리했습니다.</p>
+          <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
+            <article style={{ border: '1px solid #d8ece5', background: '#ecfaf4', borderRadius: 12, padding: '10px 10px' }}>
+              <p style={{ margin: 0, fontSize: 12, color: '#1d8a6d', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 5 }}><Sparkles size={14} /> 성실형 자산 빌더</p>
+              <p style={{ margin: '4px 0 0', fontSize: 11, color: '#5c8f82' }}>규칙적인 실천이 강점</p>
+            </article>
+            <article style={{ border: '1px solid #dce4f7', background: '#eef3ff', borderRadius: 12, padding: '10px 10px' }}>
+              <p style={{ margin: 0, fontSize: 12, color: '#496de0', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 5 }}><TrendingUp size={14} /> 계속 자산 증가형</p>
+              <p style={{ margin: '4px 0 0', fontSize: 11, color: '#7288bc' }}>변동성 커버 가능</p>
+            </article>
+            <article style={{ border: '1px solid #dce4f7', background: '#f2f6ff', borderRadius: 12, padding: '10px 10px' }}>
+              <p style={{ margin: 0, fontSize: 12, color: '#4d66bc', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 5 }}><ShieldCheck size={14} /> 안정적 리스크 구조</p>
+              <p style={{ margin: '4px 0 0', fontSize: 11, color: '#7288bc' }}>방어력 우수</p>
+            </article>
+          </div>
         </section>
 
-        <section style={cardStyle}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-            <img src={guideImage} alt={guide.name} style={{ width: 76, height: 92, borderRadius: 14, objectFit: 'contain', objectPosition: 'center top', background: '#eef3fb', border: '1px solid #d8e2f2', flexShrink: 0, padding: 2 }} />
-            <div style={{ flex: 1 }}>
-              <p style={{ margin: 0, color: '#111d3e', fontWeight: 900, fontSize: 20, letterSpacing: '-0.01em' }}>{guide.name}</p>
-              <p style={{ margin: '2px 0 8px', color: '#6a7590', fontSize: 14, letterSpacing: '-0.01em' }}>{guide.role}</p>
-              <div style={{ border: '1px solid #d5ddeb', background: '#f7fafe', borderRadius: 14, padding: '10px 12px', color: '#34405f', fontSize: 14, lineHeight: 1.45, display: 'flex', gap: 8, alignItems: 'flex-start', letterSpacing: '-0.01em' }}>
-                <Bot size={16} color="#111f45" style={{ marginTop: 2, flexShrink: 0 }} />
-                {finalComment}
-              </div>
+        <section style={{ ...cardStyle, padding: 0, overflow: 'hidden' }}>
+          <div style={{ padding: '12px 16px 0' }}>
+            <p style={{ margin: 0, color: '#25345e', fontWeight: 900, fontSize: 15, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Mountain size={15} color="#7d8cab" /> 자산 고지 시각화
+            </p>
+            <p style={{ margin: '2px 0 0', color: '#b0bbd3', fontWeight: 800, fontSize: 11, textAlign: 'right' }}>ASSET TOPOGRAPHY</p>
+          </div>
+          <div style={{ height: 230, position: 'relative', marginTop: 4, background: 'linear-gradient(180deg,#ffffff 0%,#f8fafe 100%)' }}>
+            <div style={{ position: 'absolute', left: 16, right: 16, bottom: 34, borderTop: '3px dashed #c7d4f2' }} />
+            <div style={{ position: 'absolute', left: 8, right: -30, bottom: 34, height: 100, background: 'linear-gradient(180deg,rgba(101,141,255,0.06),rgba(101,141,255,0.22))', clipPath: 'polygon(0 100%, 0 85%, 25% 70%, 50% 56%, 75% 42%, 100% 30%, 100% 100%)' }} />
+            {[0, 1, 2, 3, 4].map((idx) => (
+              <div key={idx} style={{ position: 'absolute', left: `${16 + idx * 20}%`, bottom: `${34 + idx * 17}px`, width: 12, height: 12, borderRadius: 999, background: idx === 0 ? '#5b63ff' : '#d9dfec', border: '2px solid #fff' }} />
+            ))}
+            <div style={{ position: 'absolute', left: 18, right: 12, bottom: 10, display: 'grid', gridTemplateColumns: 'repeat(5,1fr)' }}>
+              {['2024', '2025', '2026', '2027', '2028'].map((year) => (
+                <p key={year} style={{ margin: 0, fontSize: 11, color: '#9aabcf', fontWeight: 700 }}>{year}</p>
+              ))}
             </div>
           </div>
         </section>
 
-        <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          {[{ label: '예상 은퇴 나이', value: `${snapshot.financialIndependenceAge ?? '-'}세`, color: '#111f45' }, { label: '목표 자산', value: formatAsset(snapshot.targetAsset), color: '#0c6f5b' }, { label: '달성률', value: `${snapshot.achievementRate}%`, color: '#111f45' }, { label: '예상 소요 기간', value: monthsToGoal === null ? '-' : toYearMonth(monthsToGoal), color: '#111f45' }].map((item) => (
-            <article key={item.label} style={{ ...cardStyle, padding: 14 }}>
-              <p style={{ margin: 0, color: '#7a8297', fontSize: 12 }}>{item.label}</p>
-              <p style={{ margin: '6px 0 0', color: item.color, fontSize: 30, fontWeight: 900, lineHeight: 1.1 }}>{item.value}</p>
-            </article>
-          ))}
-        </section>
-
         <section style={cardStyle}>
-          <p style={{ margin: 0, color: '#1c2333', fontSize: 15, fontWeight: 900 }}>추천 액션 플랜</p>
-          <div style={{ marginTop: 10, display: 'grid', gap: 8 }}>
-            {roadmap.map((item, actionIndex) => (
-              <button
-                key={item.title}
-                type="button"
-                onClick={() =>
-                  navigate('/action-plan-detail', {
-                    state: {
-                      item,
-                      categoryId,
-                      answers,
-                      simulationSnapshot: snapshot,
-                      actionIndex,
-                    } as ActionPlanDetailState,
-                  })
-                }
-                style={{
-                  borderRadius: 14,
-                  border: item.selected ? '1.5px solid #111f45' : '1px solid #d9deea',
-                  background: item.selected ? '#eff3fb' : '#ffffff',
-                  padding: '12px 12px',
-                  textAlign: 'left',
-                  cursor: 'pointer',
-                }}
-              >
-                <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                  <IconByType type={item.icon} />
-                  <div>
-                    <p style={{ margin: 0, color: '#1b2235', fontWeight: 800 }}>{item.title}</p>
-                    <p style={{ margin: '4px 0 0', color: '#6f7890', fontSize: 13 }}>{item.description}</p>
-                    <p style={{ margin: '6px 0 0', color: '#8d96ac', fontSize: 12, fontWeight: 700 }}>{item.impact}</p>
+          <div style={{ display: 'grid', gap: 12 }}>
+            {yearlyRoadmap.map((item, idx) => {
+              const title =
+                idx === 0 ? '베이스캠프 확보' : idx === 1 ? '능선 진입' : idx === 2 ? '고도 적응' : idx === 3 ? '정상 가시권' : '정상 정복 (Peak)';
+              const note =
+                idx === 0 ? '안정적인 현금흐름 확보' : idx === 1 ? '복리 가속도 구간' : idx === 2 ? '자산 포트폴리오 최적화' : idx === 3 ? '목표 수익률 달성 임박' : '5년내 재정 완성';
+              return (
+                <article key={item.year} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
+                  <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                    <div style={{ width: 28, height: 28, borderRadius: 8, background: idx === 0 ? '#5b63ff' : '#f2f5fb', color: idx === 0 ? '#fff' : '#91a0c2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 12 }}>
+                      {idx + 1}
+                    </div>
+                    <div>
+                      <p style={{ margin: 0, color: '#1f2d4d', fontWeight: 800 }}>{title}</p>
+                      <p style={{ margin: '2px 0 0', color: '#93a0bc', fontSize: 12 }}>{note}</p>
+                    </div>
                   </div>
-                </div>
-              </button>
-            ))}
+                  <div style={{ textAlign: 'right' }}>
+                    <p style={{ margin: 0, color: '#1f3c8f', fontWeight: 900, fontSize: 26 }}>{formatAsset(item.asset)}</p>
+                    <p style={{ margin: '2px 0 0', color: '#2fb481', fontWeight: 800, fontSize: 12 }}>+{Math.round(item.increase / 1000000).toLocaleString()}만 증가</p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </section>
 
-        <section style={{ ...cardStyle, background: '#f4faf8', borderColor: '#d9eee8' }}>
-          <p style={{ margin: 0, color: '#0f7d68', fontWeight: 900, fontSize: 18, letterSpacing: '-0.01em' }}>작은 시작이 큰 변화를 만듭니다</p>
-          <p style={{ margin: '6px 0 0', color: '#6f7890', fontSize: 14, letterSpacing: '-0.01em', lineHeight: 1.35 }}>첫 번째 액션부터 실행하면 계획이 현실이 됩니다.</p>
+        <section style={cardStyle}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 10 }}>
+            <img
+              src={guideImage}
+              alt={guide.name}
+              style={{ width: 76, height: 92, borderRadius: 14, objectFit: 'contain', objectPosition: 'center top', background: '#eef3fb', border: '1px solid #d8e2f2', flexShrink: 0, padding: 2 }}
+            />
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: 0, color: '#111d3e', fontWeight: 900 }}>{guide.name}</p>
+              <p style={{ margin: '2px 0 8px', color: '#6a7590', fontSize: 12 }}>{guide.role}</p>
+              <div style={{ border: '1px solid #d5ddeb', background: '#f7fafe', borderRadius: 14, padding: '10px 12px', color: '#34405f', fontSize: 14, lineHeight: 1.45 }}>
+                {finalComment}
+              </div>
+            </div>
+          </div>
+          <button type="button" onClick={onShareVisionCard} style={{ ...secondaryButtonStyle, marginTop: 12, width: '100%', fontSize: 20, display: 'flex', justifyContent: 'center', gap: 8, alignItems: 'center' }}>
+            <Share2 size={20} />
+            비전 카드 공유하기
+          </button>
+          {shareMessage && <p style={{ margin: '8px 0 0', color: '#526286', fontSize: 13 }}>{shareMessage}</p>}
         </section>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <button type="button" onClick={() => navigate('/result', { state: { answers, categoryId } })} style={{ border: '1px solid #d9deea', borderRadius: 999, background: '#fff', color: '#38415a', fontWeight: 800, fontSize: 16, padding: '14px 12px', cursor: 'pointer' }}>대시보드</button>
-          <button type="button" onClick={() => navigate('/result', { state: { answers, categoryId } })} style={{ border: 'none', borderRadius: 999, background: '#101d40', color: '#fff', fontWeight: 900, fontSize: 16, padding: '14px 12px', cursor: 'pointer' }}>
-            다시 시작하기 <RotateCcw size={16} style={{ display: 'inline-block', verticalAlign: 'middle' }} />
+          <button type="button" onClick={() => navigate('/result', { state: { answers, categoryId } })} style={secondaryButtonStyle}>
+            대시보드
+          </button>
+          <button type="button" onClick={() => navigate('/checkup-consent', { state: { answers, categoryId } })} style={primaryButtonStyle}>
+            점검 동의
           </button>
         </div>
+
+        <button type="button" onClick={() => navigate('/result', { state: { answers, categoryId } })} style={{ ...secondaryButtonStyle, fontSize: 14, padding: '12px 12px', color: '#394768' }}>
+          다시 계산하기 <RotateCcw size={14} style={{ display: 'inline-block', verticalAlign: 'middle' }} />
+        </button>
       </main>
     </div>
   );

@@ -11,9 +11,9 @@ import agentChoiImg from '../assets/images/agent_choi.png';
 import agentYouImg from '../assets/images/agent_you.png';
 
 // 배경 이미지
-import home1 from '../assets/images/home1.png';
-import home2 from '../assets/images/home2.png';
-import home3 from '../assets/images/home3.png';
+import home1 from '../assets/images/home1.jpg';
+import home2 from '../assets/images/home2.jpg';
+import home3 from '../assets/images/home3.jpg';
 
 // --- Types & Data ---
 type QuestionType = 'text' | 'number' | 'single' | 'multi' | 'slider' | 'intro';
@@ -186,7 +186,7 @@ const Wizard = () => {
         setAnswers(newAnswers);
 
         if (isLastStep) {
-            navigate('/result', { state: { answers: newAnswers, categoryId } });
+            navigate('/value-discovery', { state: { answers: newAnswers, categoryId } });
         } else {
             setCurrentStepIndex(prev => prev + 1);
             setInputValue('');
@@ -202,7 +202,7 @@ const Wizard = () => {
             // 선택 상태를 잠깐 보여준 뒤 다음 스텝으로
             setTimeout(() => {
                 if (isLastStep) {
-                    navigate('/result', { state: { answers: newAnswers, categoryId } });
+                    navigate('/value-discovery', { state: { answers: newAnswers, categoryId } });
                 } else {
                     setCurrentStepIndex(prev => prev + 1);
                 }

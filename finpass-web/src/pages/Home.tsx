@@ -2,16 +2,13 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import home1 from '../assets/images/home1.png';
-import home2 from '../assets/images/home2.png';
-import home3 from '../assets/images/home3.png';
-import 부동산Image from '../assets/images/부동산.png';
-import 기초자산Image from '../assets/images/기초자산.png';
-import 주식Image from '../assets/images/주식.png';
-import 라이프Image from '../assets/images/라이프.png';
-
-const HERO_BACKGROUNDS = [home1, home2, home3];
-const CATEGORY_BACKGROUNDS = [부동산Image, 기초자산Image, 주식Image, 라이프Image];
+import home1 from '../assets/images/home1.jpg';
+import home2 from '../assets/images/home2.jpg';
+import home3 from '../assets/images/home3.jpg';
+import 부동산Image from '../assets/images/부동산.jpg';
+import 기초자산Image from '../assets/images/기초자산.jpg';
+import 주식Image from '../assets/images/주식.jpg';
+import 라이프Image from '../assets/images/라이프.jpg';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -51,16 +48,6 @@ const Home = () => {
       window.clearTimeout(fallbackTimer);
     };
   }, [fromOnboarding]);
-
-  useEffect(() => {
-    const allImages = [...HERO_BACKGROUNDS, ...CATEGORY_BACKGROUNDS];
-    allImages.forEach((src, index) => {
-      const preload = new Image();
-      preload.decoding = 'async';
-      if (index < 2) preload.loading = 'eager';
-      preload.src = src;
-    });
-  }, []);
 
   useEffect(() => {
     if (sequenceStep < 3 && isHeroReady) {
