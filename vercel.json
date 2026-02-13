@@ -1,5 +1,5 @@
 {
-  "installCommand": "pnpm install --dir finpass-web",
+  "installCommand": "corepack enable && corepack prepare pnpm@9.15.4 --activate && pnpm install --dir finpass-web --frozen-lockfile --prefer-offline",
   "buildCommand": "pnpm --dir finpass-web build",
   "outputDirectory": "finpass-web/dist",
   "rewrites": [

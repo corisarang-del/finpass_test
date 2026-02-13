@@ -1,7 +1,7 @@
 {
   "framework": "vite",
   "buildCommand": "pnpm build",
-  "installCommand": "pnpm install",
+  "installCommand": "corepack enable && corepack prepare pnpm@9.15.4 --activate && pnpm install --frozen-lockfile --prefer-offline",
   "outputDirectory": "dist",
   "rewrites": [
     {
