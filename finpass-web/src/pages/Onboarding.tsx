@@ -106,7 +106,8 @@ const Onboarding = () => {
                 position: 'fixed',
                 inset: 0,
                 width: '100vw',
-                height: '100vh',
+                height: '100dvh',
+                minHeight: '100dvh',
                 overflow: 'hidden',
                 fontFamily: "'Pretendard', 'Noto Sans KR', sans-serif",
             }}
@@ -194,7 +195,7 @@ const Onboarding = () => {
                     flexDirection: 'column',
                     paddingLeft: 16,
                     paddingRight: 16,
-                    paddingBottom: 'calc(116px + env(safe-area-inset-bottom))',
+                    paddingBottom: 'calc(132px + env(safe-area-inset-bottom))',
                     overflowY: 'auto',
                     overflowX: 'hidden',
                     WebkitOverflowScrolling: 'touch',
@@ -323,13 +324,14 @@ const Onboarding = () => {
             {/* === 하단 고정 CTA: 모바일에서도 항상 노출 === */}
             <div
                 style={{
-                    position: 'absolute',
+                    position: 'fixed',
                     left: 0,
                     right: 0,
                     bottom: 0,
                     zIndex: 60,
                     padding: '10px 16px calc(12px + env(safe-area-inset-bottom))',
                     background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, #ffffff 32%, #ffffff 100%)',
+                    pointerEvents: 'none',
                 }}
             >
                 <motion.p
@@ -369,6 +371,7 @@ const Onboarding = () => {
                             transition: 'all 0.2s ease',
                             minWidth: 146,
                             justifyContent: 'center',
+                            pointerEvents: 'auto',
                         }}
                     >
                         {step.cta}
