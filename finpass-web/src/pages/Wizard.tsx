@@ -157,6 +157,8 @@ const Wizard = () => {
     const progress = ((currentStepIndex + 1) / questions.length) * 100;
     const isLastStep = currentStepIndex === questions.length - 1;
     const isMobile = viewportWidth <= 768;
+    const isDesktop = viewportWidth >= 1024;
+    const dialogMinHeight = isMobile ? 136 : 120;
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -244,8 +246,7 @@ const Wizard = () => {
                 width: '100vw',
                 height: '100dvh',
                 minHeight: '100dvh',
-                overflow: isMobile ? 'auto' : 'hidden',
-                WebkitOverflowScrolling: 'touch',
+                overflow: 'hidden',
                 fontFamily: "'Pretendard', 'Noto Sans KR', sans-serif",
             }}
         >
@@ -268,7 +269,7 @@ const Wizard = () => {
             />
 
             {/* === 상단 UI === */}
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 50, padding: '16px 20px' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 50, padding: isMobile ? '14px 14px' : '16px 20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <button
                         onClick={() => {
@@ -341,26 +342,30 @@ const Wizard = () => {
                     transition={{ duration: 0.4 }}
                     style={{
                         position: 'absolute',
-                        bottom: 0,
-                        left: '2%',
-                        height: showChoices ? (isMobile ? '46vh' : '60vh') : (isMobile ? '56vh' : '70vh'),
-                        zIndex: 10,
+                        bottom: isMobile ? `calc(${dialogMinHeight + 10}px + env(safe-area-inset-bottom))` : 0,
+                        left: isMobile ? 10 : '2%',
+                        height: isMobile ? 'auto' : (showChoices ? '60vh' : '70vh'),
+                        width: isMobile ? 'min(34vw, 132px)' : 'auto',
+                        maxHeight: isMobile ? '30vh' : 'none',
+                        zIndex: isMobile ? 24 : 10,
                         pointerEvents: 'none',
-                        display: isMobile ? 'none' : 'flex',
+                        display: 'flex',
                         alignItems: 'flex-end',
                         transition: 'height 0.3s ease',
+                        opacity: isMobile ? 0.96 : 1,
                     }}
                 >
                     <img
                         src={guide.image}
                         alt={guide.name}
                         style={{
-                            height: '100%',
-                            width: 'auto',
+                            height: isMobile ? 'auto' : '100%',
+                            width: isMobile ? '100%' : 'auto',
+                            maxHeight: isMobile ? '100%' : 'none',
                             maxWidth: 'none',
                             objectFit: 'contain',
                             objectPosition: 'bottom',
-                            filter: 'drop-shadow(0 10px 40px rgba(0,0,0,0.5))',
+                            filter: isMobile ? 'drop-shadow(0 8px 24px rgba(0,0,0,0.24))' : 'drop-shadow(0 10px 40px rgba(0,0,0,0.5))',
                         }}
                     />
                 </motion.div>
@@ -377,12 +382,13 @@ const Wizard = () => {
                         transition={{ duration: 0.3, delay: 0.2 }}
                         style={{
                             position: 'absolute',
-                            top: isMobile ? 84 : '18%',
-                            bottom: isMobile ? 'calc(154px + env(safe-area-inset-bottom))' : 'auto',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            width: isMobile ? 'calc(100% - 24px)' : '60%',
-                            maxWidth: 480,
+                            top: isMobile ? 86 : '16%',
+                            bottom: isMobile ? `calc(${dialogMinHeight + 18}px + env(safe-area-inset-bottom))` : 'auto',
+                            left: isMobile ? '50%' : 'auto',
+                            right: isMobile ? 'auto' : (isDesktop ? '8%' : '5%'),
+                            transform: isMobile ? 'translateX(-50%)' : 'none',
+                            width: isMobile ? 'calc(100% - 24px)' : 'min(52vw, 560px)',
+                            maxWidth: isMobile ? 480 : 560,
                             maxHeight: isMobile ? 'none' : '52vh',
                             zIndex: 45,
                             display: 'flex',
@@ -397,7 +403,7 @@ const Wizard = () => {
                             textAlign: 'center',
                         }}>
                             <h2 style={{
-                                fontSize: 21,
+                                fontSize: isMobile ? 18 : 21,
                                 fontWeight: 700,
                                 color: '#1a1a2e',
                                 lineHeight: 1.5,
@@ -430,16 +436,16 @@ const Wizard = () => {
                                             ? '1px solid #1e2a3a'
                                             : '1px solid #e5e7eb',
                                         borderRadius: 14,
-                                        padding: '18px 16px',
+                                        padding: isMobile ? '14px 12px' : '18px 16px',
                                         color: inputValue === opt ? '#ffffff' : '#2c2c3a',
-                                        fontSize: 15,
+                                        fontSize: isMobile ? 14 : 15,
                                         fontWeight: 600,
                                         cursor: 'pointer',
                                         textAlign: 'left',
                                         letterSpacing: '-0.01em',
                                         transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                                         position: 'relative',
-                                        minHeight: 64,
+                                        minHeight: isMobile ? 56 : 64,
                                         display: 'flex',
                                         alignItems: 'flex-end',
                                         boxShadow: inputValue === opt
@@ -498,16 +504,16 @@ const Wizard = () => {
                                                 ? '1px solid #1e2a3a'
                                                 : '1px solid #e5e7eb',
                                             borderRadius: 14,
-                                            padding: '18px 16px',
+                                            padding: isMobile ? '14px 12px' : '18px 16px',
                                             color: isSelected ? '#ffffff' : '#2c2c3a',
-                                            fontSize: 15,
+                                            fontSize: isMobile ? 14 : 15,
                                             fontWeight: 600,
                                             cursor: 'pointer',
                                             textAlign: 'left',
                                             letterSpacing: '-0.01em',
                                             transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                                             position: 'relative',
-                                            minHeight: 64,
+                                            minHeight: isMobile ? 56 : 64,
                                             display: 'flex',
                                             alignItems: 'flex-end',
                                             boxShadow: isSelected
@@ -614,7 +620,7 @@ const Wizard = () => {
                         background: 'white',
                         borderTop: `2px solid ${guide.color}30`,
                         padding: isMobile ? '14px 16px calc(12px + env(safe-area-inset-bottom))' : '20px 28px 24px',
-                        minHeight: isMobile ? 132 : 120,
+                        minHeight: dialogMinHeight,
                         boxShadow: '0 -4px 20px rgba(0,0,0,0.05)',
                     }}
                 >
