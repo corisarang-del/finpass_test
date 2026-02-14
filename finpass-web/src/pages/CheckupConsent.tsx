@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Mail } from 'lucide-react';
 
@@ -23,8 +23,17 @@ const CheckupConsent = () => {
   const [cycleMonths, setCycleMonths] = useState<(typeof cycleOptions)[number]>(3);
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const isMobile = viewportWidth <= 768;
 
   const canSubmit = useMemo(() => isValidEmail(email), [email]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const onSubmit = () => {
     if (!canSubmit) return;
@@ -40,7 +49,7 @@ const CheckupConsent = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px calc(96px + env(safe-area-inset-bottom))', fontFamily: "'Pretendard', 'SUIT', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: isMobile ? '16px 14px calc(124px + env(safe-area-inset-bottom))' : '16px 14px 34px', fontFamily: "'Pretendard', 'SUIT', sans-serif" }}>
       <main style={{ width: '100%', maxWidth: 430, margin: '0 auto', background: '#ffffff', borderRadius: 20, border: '1px solid #e2e8f4', padding: '20px 16px 18px', color: '#2a3a58', boxShadow: '0 10px 24px rgba(37, 64, 110, 0.06)' }}>
         <button
           type="button"

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Share2, RotateCcw, Mountain, ShieldCheck, TrendingUp, Sparkles } from 'lucide-react';
 import agentHanImg from '../assets/images/agent_han.png';
@@ -92,6 +92,15 @@ const FinalAnalysis = () => {
 
   const finalComment = getFinalGuideComment(categoryId, answers);
   const [shareMessage, setShareMessage] = useState('');
+  const [viewportWidth, setViewportWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const isMobile = viewportWidth <= 768;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const yearlyRoadmap = useMemo(() => {
     const baseAsset = snapshot.targetAsset * (snapshot.achievementRate / 100);
@@ -120,7 +129,7 @@ const FinalAnalysis = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px calc(96px + env(safe-area-inset-bottom))', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: isMobile ? '16px 14px calc(124px + env(safe-area-inset-bottom))' : '16px 14px 34px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 420, margin: '0 auto', display: 'grid', gap: 14 }}>
         <section style={{ ...cardStyle, padding: 20 }}>
           <p style={{ margin: 0, color: '#7f95be', fontWeight: 600, fontSize: 11, letterSpacing: '0.08em', fontFamily: englishFont }}>5-YEAR ASSET ROADMAP</p>
@@ -135,7 +144,7 @@ const FinalAnalysis = () => {
               <p style={{ margin: '2px 0 0', color: selectedOptionColor, fontSize: 24, fontWeight: 700 }}>{snapshot.achievementRate}%</p>
             </div>
           </div>
-          <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
+          <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', gap: 8 }}>
             <article style={{ border: '1px solid #d8ece5', background: '#ecfaf4', borderRadius: 12, padding: '10px 10px' }}>
               <p style={{ margin: 0, fontSize: 12, color: '#1d8a6d', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5 }}><Sparkles size={14} /> 성실형 자산 빌더</p>
               <p style={{ margin: '4px 0 0', fontSize: 11, color: '#5c8f82' }}>규칙적인 실천이 강점</p>

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronRight, Flag, Stars, Target } from 'lucide-react';
 
@@ -57,6 +57,15 @@ const VisionBoard = () => {
   const valueProfile = routeState.valueProfile ?? { coreGoals: ['경제적 자유'], coreValues: ['균형'], motivationStyle: 'balance' as const };
   const name = String(answers.c1 ?? '고객');
   const currentYear = new Date().getFullYear();
+  const [viewportWidth, setViewportWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const isMobile = viewportWidth <= 768;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const summary: VisionBoardSummary = useMemo(() => {
     const headline = `${name} 님의 비전보드`;
@@ -82,7 +91,7 @@ const VisionBoard = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px calc(96px + env(safe-area-inset-bottom))', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: isMobile ? '16px 14px calc(124px + env(safe-area-inset-bottom))' : '16px 14px 34px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 430, margin: '0 auto', display: 'grid', gap: 14 }}>
         <section style={{ ...cardStyle, background: '#ffffff', color: '#223657', position: 'relative', overflow: 'hidden', padding: 20 }}>
           <div style={{ position: 'absolute', top: -60, right: -60, width: 190, height: 190, borderRadius: 999, background: '#edf4ff', zIndex: 0 }} />
@@ -139,7 +148,7 @@ const VisionBoard = () => {
           </p>
         </section>
 
-        <button type="button" onClick={moveNext} style={{ ...primaryButtonStyle, position: 'sticky', bottom: 'calc(12px + env(safe-area-inset-bottom))', zIndex: 3 }}>
+        <button type="button" onClick={moveNext} style={{ ...primaryButtonStyle, position: isMobile ? 'sticky' : 'static', bottom: isMobile ? 'calc(10px + env(safe-area-inset-bottom))' : undefined, zIndex: 3 }}>
           현실 입력으로 이동 <ChevronRight size={18} style={{ display: 'inline-block', verticalAlign: 'middle' }} />
         </button>
       </main>

@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChevronRight, Flag, Wallet, Gauge, Sparkles } from 'lucide-react';
 import {
@@ -104,8 +104,17 @@ const Result = () => {
   const [monthlyIncome, setMonthlyIncome] = useState(defaults.monthlyIncome);
   const [monthlyExpense, setMonthlyExpense] = useState(defaults.monthlyExpense);
   const [investmentReturnRate, setInvestmentReturnRate] = useState(defaults.investmentReturnRate);
+  const [viewportWidth, setViewportWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const isMobile = viewportWidth <= 768;
 
   const targetAsset = targetMonthlyExpense * 12 * 25;
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const answerHighlights = useMemo(
     () =>
@@ -130,7 +139,7 @@ const Result = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #eef2f7 100%)', padding: '20px 14px calc(96px + env(safe-area-inset-bottom))', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #eef2f7 100%)', padding: isMobile ? '20px 14px calc(124px + env(safe-area-inset-bottom))' : '20px 14px 36px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 420, margin: '0 auto', display: 'grid', gap: 14 }}>
         {visionBoardSummary && (
           <section style={{ ...sectionStyle, background: '#0f1c3d', color: '#fff' }}>
@@ -278,7 +287,7 @@ const Result = () => {
           )}
         </section>
 
-        <button type="button" onClick={moveNext} style={{ ...primaryButtonStyle, position: 'sticky', bottom: 'calc(12px + env(safe-area-inset-bottom))', zIndex: 3 }}>
+        <button type="button" onClick={moveNext} style={{ ...primaryButtonStyle, position: isMobile ? 'sticky' : 'static', bottom: isMobile ? 'calc(10px + env(safe-area-inset-bottom))' : undefined, zIndex: 3 }}>
           가능성 탐색 시작 <ChevronRight size={18} style={{ display: 'inline-block', verticalAlign: 'middle' }} />
         </button>
       </main>
@@ -287,3 +296,4 @@ const Result = () => {
 };
 
 export default Result;
+
