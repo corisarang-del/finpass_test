@@ -38,6 +38,10 @@ const primaryButtonStyle: React.CSSProperties = {
   padding: '12px 15px',
   cursor: 'pointer',
   boxShadow: '0 6px 14px rgba(30, 42, 58, 0.2)',
+  minHeight: 48,
+  touchAction: 'manipulation',
+  position: 'relative',
+  zIndex: 1,
 };
 
 const chipStyle = (active: boolean): React.CSSProperties => ({
@@ -133,7 +137,7 @@ const ValueDiscovery = () => {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f4f6fa', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
-      <main style={{ maxWidth: 760, margin: '0 auto', padding: '16px 14px 30px', display: 'grid', gap: 12 }}>
+      <main style={{ maxWidth: 760, margin: '0 auto', padding: '16px 14px calc(96px + env(safe-area-inset-bottom))', display: 'grid', gap: 12 }}>
         <header style={{ height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#6e7f9f' }}>
           <button type="button" onClick={() => navigate(-1)} aria-label="뒤로 가기" style={{ border: '1px solid #e0e7f3', borderRadius: 999, background: '#fff', color: '#617494', fontSize: 13, display: 'inline-flex', alignItems: 'center', gap: 6, cursor: 'pointer', fontWeight: 700, width: 36, height: 36, justifyContent: 'center' }}>
             <ArrowLeft size={18} />
@@ -238,7 +242,7 @@ const ValueDiscovery = () => {
           </p>
         </section>
 
-        <button type="button" onClick={moveNext} disabled={!canProceed} style={{ ...primaryButtonStyle, background: canProceed ? selectedOptionColor : '#b8c7df', cursor: canProceed ? 'pointer' : 'not-allowed' }}>
+        <button type="button" onClick={moveNext} disabled={!canProceed} style={{ ...primaryButtonStyle, background: canProceed ? selectedOptionColor : '#b8c7df', cursor: canProceed ? 'pointer' : 'not-allowed', position: 'sticky', bottom: 'calc(12px + env(safe-area-inset-bottom))', zIndex: 3 }}>
           비전보드 만들기 <ChevronRight size={18} style={{ display: 'inline-block', verticalAlign: 'middle' }} />
         </button>
       </main>

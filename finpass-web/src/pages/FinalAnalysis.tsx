@@ -51,6 +51,10 @@ const primaryButtonStyle: React.CSSProperties = {
   padding: '12px 14px',
   cursor: 'pointer',
   boxShadow: '0 6px 14px rgba(30, 42, 58, 0.2)',
+  minHeight: 48,
+  touchAction: 'manipulation',
+  position: 'relative',
+  zIndex: 1,
 };
 
 const secondaryButtonStyle: React.CSSProperties = {
@@ -62,6 +66,10 @@ const secondaryButtonStyle: React.CSSProperties = {
   fontSize: 14,
   padding: '12px 12px',
   cursor: 'pointer',
+  minHeight: 46,
+  touchAction: 'manipulation',
+  position: 'relative',
+  zIndex: 1,
 };
 
 const FinalAnalysis = () => {
@@ -112,7 +120,7 @@ const FinalAnalysis = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px calc(96px + env(safe-area-inset-bottom))', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 420, margin: '0 auto', display: 'grid', gap: 14 }}>
         <section style={{ ...cardStyle, padding: 20 }}>
           <p style={{ margin: 0, color: '#7f95be', fontWeight: 600, fontSize: 11, letterSpacing: '0.08em', fontFamily: englishFont }}>5-YEAR ASSET ROADMAP</p>

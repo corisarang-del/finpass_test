@@ -141,6 +141,9 @@ const Wizard = () => {
     const [inputValue, setInputValue] = useState<any>('');
     const [isTyping, setIsTyping] = useState(true);
     const [displayedText, setDisplayedText] = useState('');
+    const [viewportWidth, setViewportWidth] = useState<number>(
+        typeof window !== 'undefined' ? window.innerWidth : 1024
+    );
 
     const questions = useMemo(() => {
         const allQuestions = [...COMMON_QUESTIONS, ...(CATEGORY_QUESTIONS[categoryId] || [])];
@@ -153,6 +156,14 @@ const Wizard = () => {
     const currentQuestion = questions[currentStepIndex];
     const progress = ((currentStepIndex + 1) / questions.length) * 100;
     const isLastStep = currentStepIndex === questions.length - 1;
+    const isMobile = viewportWidth <= 768;
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const onResize = () => setViewportWidth(window.innerWidth);
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
 
     // 타이핑 효과
     useEffect(() => {
@@ -231,8 +242,10 @@ const Wizard = () => {
                 position: 'fixed',
                 inset: 0,
                 width: '100vw',
-                height: '100vh',
-                overflow: 'hidden',
+                height: '100dvh',
+                minHeight: '100dvh',
+                overflow: isMobile ? 'auto' : 'hidden',
+                WebkitOverflowScrolling: 'touch',
                 fontFamily: "'Pretendard', 'Noto Sans KR', sans-serif",
             }}
         >
@@ -330,10 +343,10 @@ const Wizard = () => {
                         position: 'absolute',
                         bottom: 0,
                         left: '2%',
-                        height: showChoices ? '60vh' : '70vh',
+                        height: showChoices ? (isMobile ? '46vh' : '60vh') : (isMobile ? '56vh' : '70vh'),
                         zIndex: 10,
                         pointerEvents: 'none',
-                        display: 'flex',
+                        display: isMobile ? 'none' : 'flex',
                         alignItems: 'flex-end',
                         transition: 'height 0.3s ease',
                     }}
@@ -364,12 +377,13 @@ const Wizard = () => {
                         transition={{ duration: 0.3, delay: 0.2 }}
                         style={{
                             position: 'absolute',
-                            top: '18%',
+                            top: isMobile ? 84 : '18%',
+                            bottom: isMobile ? 'calc(154px + env(safe-area-inset-bottom))' : 'auto',
                             left: '50%',
                             transform: 'translateX(-50%)',
-                            width: '60%',
+                            width: isMobile ? 'calc(100% - 24px)' : '60%',
                             maxWidth: 480,
-                            maxHeight: '52vh',
+                            maxHeight: isMobile ? 'none' : '52vh',
                             zIndex: 45,
                             display: 'flex',
                             flexDirection: 'column',
@@ -599,16 +613,16 @@ const Wizard = () => {
                     style={{
                         background: 'white',
                         borderTop: `2px solid ${guide.color}30`,
-                        padding: '20px 28px 24px',
-                        minHeight: 120,
+                        padding: isMobile ? '14px 16px calc(12px + env(safe-area-inset-bottom))' : '20px 28px 24px',
+                        minHeight: isMobile ? 132 : 120,
                         boxShadow: '0 -4px 20px rgba(0,0,0,0.05)',
                     }}
                 >
                     {/* 가이드 코멘트 (타이핑 효과) */}
                     <p style={{
                         color: '#1a1a2e',
-                        fontSize: 16,
-                        lineHeight: 1.7,
+                        fontSize: isMobile ? 14 : 16,
+                        lineHeight: 1.6,
                         margin: 0,
                         fontWeight: 400,
                     }}>

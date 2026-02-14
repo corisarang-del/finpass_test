@@ -40,8 +40,8 @@ const CheckupConsent = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px 28px', fontFamily: "'Pretendard', 'SUIT', sans-serif", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <main style={{ width: '100%', maxWidth: 430, background: '#ffffff', borderRadius: 20, border: '1px solid #e2e8f4', padding: '20px 16px 18px', color: '#2a3a58', boxShadow: '0 10px 24px rgba(37, 64, 110, 0.06)' }}>
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px calc(96px + env(safe-area-inset-bottom))', fontFamily: "'Pretendard', 'SUIT', sans-serif" }}>
+      <main style={{ width: '100%', maxWidth: 430, margin: '0 auto', background: '#ffffff', borderRadius: 20, border: '1px solid #e2e8f4', padding: '20px 16px 18px', color: '#2a3a58', boxShadow: '0 10px 24px rgba(37, 64, 110, 0.06)' }}>
         <button
           type="button"
           onClick={() => navigate(-1)}
@@ -83,6 +83,8 @@ const CheckupConsent = () => {
                   cursor: 'pointer',
                   boxShadow: active ? '0 6px 14px rgba(30, 42, 58, 0.2)' : 'none',
                   transition: 'all 0.2s ease',
+                  minHeight: 44,
+                  touchAction: 'manipulation',
                 }}
               >
                 {cycle}개월
@@ -127,6 +129,8 @@ const CheckupConsent = () => {
             padding: '12px 14px',
             cursor: canSubmit && !submitted ? 'pointer' : 'not-allowed',
             boxShadow: canSubmit && !submitted ? '0 6px 14px rgba(30, 42, 58, 0.2)' : undefined,
+            minHeight: 48,
+            touchAction: 'manipulation',
           }}
         >
           {submitted ? '동의 완료' : '점검 동의 및 동반 시작'}
@@ -146,6 +150,8 @@ const CheckupConsent = () => {
             fontSize: 13,
             padding: '11px 14px',
             cursor: 'pointer',
+            minHeight: 44,
+            touchAction: 'manipulation',
           }}
         >
           홈으로 이동

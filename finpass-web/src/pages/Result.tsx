@@ -77,6 +77,10 @@ const primaryButtonStyle: React.CSSProperties = {
   padding: '12px 15px',
   cursor: 'pointer',
   boxShadow: '0 6px 14px rgba(30, 42, 58, 0.2)',
+  minHeight: 48,
+  touchAction: 'manipulation',
+  position: 'relative',
+  zIndex: 1,
 };
 
 const Result = () => {
@@ -126,7 +130,7 @@ const Result = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #eef2f7 100%)', padding: '20px 14px 32px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #eef2f7 100%)', padding: '20px 14px calc(96px + env(safe-area-inset-bottom))', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 420, margin: '0 auto', display: 'grid', gap: 14 }}>
         {visionBoardSummary && (
           <section style={{ ...sectionStyle, background: '#0f1c3d', color: '#fff' }}>
@@ -274,7 +278,7 @@ const Result = () => {
           )}
         </section>
 
-        <button type="button" onClick={moveNext} style={primaryButtonStyle}>
+        <button type="button" onClick={moveNext} style={{ ...primaryButtonStyle, position: 'sticky', bottom: 'calc(12px + env(safe-area-inset-bottom))', zIndex: 3 }}>
           가능성 탐색 시작 <ChevronRight size={18} style={{ display: 'inline-block', verticalAlign: 'middle' }} />
         </button>
       </main>

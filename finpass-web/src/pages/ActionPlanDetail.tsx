@@ -77,6 +77,10 @@ const primaryButtonStyle: React.CSSProperties = {
   padding: '12px 14px',
   cursor: 'pointer',
   boxShadow: '0 6px 14px rgba(30, 42, 58, 0.2)',
+  minHeight: 48,
+  touchAction: 'manipulation',
+  position: 'relative',
+  zIndex: 1,
 };
 
 const formatAsset = (value: number) => (value >= 100000000 ? `${(value / 100000000).toFixed(1)}억원` : `${Math.round(value / 10000).toLocaleString()}만원`);
@@ -338,7 +342,7 @@ const ActionPlanDetail = () => {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px calc(96px + env(safe-area-inset-bottom))', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 860, margin: '0 auto', display: 'grid', gap: 14 }}>
         <header style={{ ...cardStyle, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <button type="button" onClick={() => navigate(-1)} style={{ border: '1px solid #d9deea', borderRadius: 999, background: '#fff', color: '#38415a', fontWeight: 800, fontSize: 14, padding: '8px 12px', cursor: 'pointer', display: 'inline-flex', gap: 6, alignItems: 'center' }}>
@@ -433,7 +437,7 @@ const ActionPlanDetail = () => {
           </div>
         </section>
 
-        <button type="button" onClick={() => navigate('/final-analysis', { state: routeState })} style={primaryButtonStyle}>
+        <button type="button" onClick={() => navigate('/final-analysis', { state: routeState })} style={{ ...primaryButtonStyle, position: 'sticky', bottom: 'calc(12px + env(safe-area-inset-bottom))', zIndex: 3 }}>
           액션 플랜 목록으로 돌아가기
         </button>
       </main>
