@@ -34,7 +34,8 @@ export interface PlanInputs {
 const RETIREMENT_AGE_OPTIONS = [40, 45, 50, 55, 60];
 const TARGET_EXPENSE_OPTIONS = [2000000, 3000000, 5000000, 8000000];
 const RETURN_RATE_OPTIONS = [5, 7, 10];
-const displayFont = "'Cormorant Garamond', 'Noto Serif KR', 'Times New Roman', serif";
+const displayFont = "'Pretendard Variable', 'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const englishFont = "'Playfair Display', 'Bodoni MT', 'Didot', 'Times New Roman', serif";
 
 const toNumber = (value: unknown, fallback: number) => {
   const n = Number(value);
@@ -60,22 +61,22 @@ const inputStyle: React.CSSProperties = {
 
 const sectionStyle: React.CSSProperties = {
   background: '#ffffff',
-  borderRadius: 22,
+  borderRadius: 18,
   border: '1px solid #dbe2ec',
-  padding: 20,
+  padding: 18,
   boxShadow: '0 10px 28px rgba(10, 23, 53, 0.05)',
 };
 
 const primaryButtonStyle: React.CSSProperties = {
   border: 'none',
-  borderRadius: 22,
+  borderRadius: 14,
   background: '#1e2f49',
   color: '#fff',
-  fontWeight: 900,
-  fontSize: 18,
-  padding: '18px 18px',
+  fontWeight: 600,
+  fontSize: 15,
+  padding: '12px 15px',
   cursor: 'pointer',
-  boxShadow: '0 8px 18px rgba(20, 33, 58, 0.22)',
+  boxShadow: '0 6px 14px rgba(30, 42, 58, 0.2)',
 };
 
 const Result = () => {
@@ -129,8 +130,8 @@ const Result = () => {
       <main style={{ maxWidth: 420, margin: '0 auto', display: 'grid', gap: 14 }}>
         {visionBoardSummary && (
           <section style={{ ...sectionStyle, background: '#0f1c3d', color: '#fff' }}>
-            <p style={{ margin: 0, color: '#8dd9c5', fontWeight: 700, fontSize: 12, letterSpacing: '0.08em' }}>VISION BOARD</p>
-            <p style={{ margin: '6px 0 0', fontSize: 24, lineHeight: 1.25, fontWeight: 900 }}>{visionBoardSummary.headline}</p>
+            <p style={{ margin: 0, color: '#8dd9c5', fontWeight: 600, fontSize: 12, letterSpacing: '0.08em', fontFamily: englishFont }}>VISION BOARD</p>
+            <p style={{ margin: '6px 0 0', fontSize: 21, lineHeight: 1.3, fontWeight: 700 }}>{visionBoardSummary.headline}</p>
             <p style={{ margin: '8px 0 0', color: '#d2dbee', fontSize: 13 }}>비전을 현실 수치와 연결해 실행 경로를 계산하는 단계입니다.</p>
             <div style={{ marginTop: 10, display: 'grid', gap: 6 }}>
               {visionBoardSummary.goalCards.slice(0, 2).map((item) => (
@@ -147,17 +148,17 @@ const Result = () => {
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, borderRadius: 999, background: '#f3f6fb', color: '#1c2a4d', fontSize: 12, fontWeight: 700, padding: '6px 10px' }}>
             <Flag size={13} /> 목표 설정
           </span>
-          <h1 style={{ fontSize: 46, margin: '14px 0 10px', lineHeight: 1.15, letterSpacing: '-0.02em', color: '#121c3a', fontFamily: displayFont }}>
+          <h1 style={{ fontSize: 34, margin: '12px 0 8px', lineHeight: 1.2, letterSpacing: '-0.02em', color: '#121c3a', fontWeight: 700, fontFamily: displayFont }}>
             은퇴 후 한 달,
             <br />
             얼마를 사용하고 싶으신가요?
           </h1>
-          <p style={{ color: '#66718a', fontSize: 17, margin: 0 }}>{guide.name}이(가) 선택하신 답변을 기준으로 계산하고 있습니다.</p>
+          <p style={{ color: '#66718a', fontSize: 15, margin: 0 }}>{guide.name}이(가) 선택하신 답변을 기준으로 계산하고 있습니다.</p>
           <p style={{ color: '#4e5a78', fontSize: 14, margin: '8px auto 0', maxWidth: 360, lineHeight: 1.4 }}>{guideComment}</p>
         </section>
 
         <section style={sectionStyle}>
-          <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8, color: '#172548', fontWeight: 800 }}>
+          <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8, color: '#172548', fontWeight: 700 }}>
             <Sparkles size={16} color="#178f74" /> 목표 은퇴 나이
           </p>
           <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 8 }}>
@@ -169,11 +170,11 @@ const Result = () => {
                   type="button"
                   onClick={() => setRetirementAge(age)}
                   style={{
-                    borderRadius: 18,
+                    borderRadius: 14,
                     border: active ? '2px solid #0f1626' : '1px solid #d4dbe7',
                     background: active ? '#1e2f49' : '#ffffff',
                     color: active ? '#fff' : '#1e2b4f',
-                    fontWeight: 800,
+                    fontWeight: 600,
                     fontSize: 16,
                     padding: '11px 0',
                     cursor: 'pointer',
@@ -186,7 +187,7 @@ const Result = () => {
             })}
           </div>
 
-          <p style={{ margin: '18px 0 0', display: 'flex', alignItems: 'center', gap: 8, color: '#172548', fontWeight: 800 }}>
+          <p style={{ margin: '18px 0 0', display: 'flex', alignItems: 'center', gap: 8, color: '#172548', fontWeight: 700 }}>
             <Wallet size={16} color="#178f74" /> 희망 월 생활비
           </p>
           <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
@@ -199,7 +200,7 @@ const Result = () => {
                   onClick={() => setTargetMonthlyExpense(amount)}
                   style={{
                     textAlign: 'left',
-                    borderRadius: 18,
+                    borderRadius: 14,
                     border: active ? '2px solid #0f1626' : '1px solid #d4dbe7',
                     background: active ? '#1e2f49' : '#ffffff',
                     padding: '15px 13px',
@@ -207,22 +208,22 @@ const Result = () => {
                     transition: 'all 0.2s ease',
                   }}
                 >
-                  <div style={{ fontSize: 28, fontWeight: 900, color: active ? '#ffffff' : '#101b3a' }}>{Math.round(amount / 10000).toLocaleString()}만원</div>
+                  <div style={{ fontSize: 24, fontWeight: 600, color: active ? '#ffffff' : '#101b3a' }}>{Math.round(amount / 10000).toLocaleString()}만원</div>
                   <div style={{ fontSize: 13, color: active ? '#cfd7ee' : '#727d97', marginTop: 3 }}>월 예상 지출</div>
                 </button>
               );
             })}
           </div>
 
-          <div style={{ marginTop: 14, borderRadius: 18, background: '#1e2f49', color: '#fff', padding: '14px 16px', textAlign: 'center' }}>
+          <div style={{ marginTop: 14, borderRadius: 14, background: '#1e2f49', color: '#fff', padding: '14px 16px', textAlign: 'center' }}>
             <div style={{ fontSize: 12, opacity: 0.9 }}>필요 목표 자산</div>
-            <div style={{ fontSize: 40, fontWeight: 900, lineHeight: 1.1, color: '#5ce0be' }}>{formatAsset(targetAsset)}</div>
+            <div style={{ fontSize: 34, fontWeight: 800, lineHeight: 1.1, color: '#5ce0be' }}>{formatAsset(targetAsset)}</div>
             <div style={{ fontSize: 12, opacity: 0.9 }}>월 {Math.round(targetMonthlyExpense / 10000).toLocaleString()}만원 × 12개월 × 25년</div>
           </div>
         </section>
 
         <section style={sectionStyle}>
-          <h2 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8, color: '#172548', fontWeight: 900, fontSize: 20 }}>
+          <h2 style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8, color: '#172548', fontWeight: 700, fontSize: 18 }}>
             <Gauge size={18} color="#178f74" /> 현재 재무 상태
           </h2>
           <div style={{ marginTop: 12, display: 'grid', gap: 10 }}>
@@ -241,11 +242,11 @@ const Result = () => {
                       type="button"
                       onClick={() => setInvestmentReturnRate(rate)}
                       style={{
-                        borderRadius: 16,
+                        borderRadius: 14,
                         border: active ? '2px solid #0f1626' : '1px solid #d4dbe7',
                         background: active ? '#1e2f49' : '#ffffff',
                         color: active ? '#fff' : '#1e2b4f',
-                        fontWeight: 800,
+                        fontWeight: 600,
                         fontSize: 15,
                         padding: '10px 0',
                         cursor: 'pointer',
@@ -261,7 +262,7 @@ const Result = () => {
         </section>
 
         <section style={{ ...sectionStyle, padding: 16 }}>
-          <p style={{ margin: 0, color: '#172548', fontWeight: 800 }}>가이드와 대화에서 선택한 내용</p>
+          <p style={{ margin: 0, color: '#172548', fontWeight: 700 }}>가이드와 대화에서 선택한 내용</p>
           {answerHighlights.length === 0 ? (
             <p style={{ margin: '8px 0 0', color: '#6c7488' }}>아직 표시할 답변이 없습니다.</p>
           ) : (

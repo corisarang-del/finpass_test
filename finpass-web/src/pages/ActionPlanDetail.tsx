@@ -64,19 +64,19 @@ const cardStyle: React.CSSProperties = {
   padding: 16,
   boxShadow: '0 8px 24px rgba(37, 64, 110, 0.06)',
 };
-const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const displayFont = "'Pretendard Variable', 'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const englishFont = "'Playfair Display', 'Bodoni MT', 'Didot', 'Times New Roman', serif";
 const selectedOptionColor = '#1e2a3a';
-const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
 const primaryButtonStyle: React.CSSProperties = {
   border: 'none',
-  borderRadius: 14,
+  borderRadius: 12,
   background: selectedOptionColor,
   color: '#fff',
-  fontWeight: 700,
-  fontSize: 15,
-  padding: '14px 12px',
+  fontWeight: 600,
+  fontSize: 14,
+  padding: '12px 14px',
   cursor: 'pointer',
-  boxShadow: selectedOptionShadow,
+  boxShadow: '0 6px 14px rgba(30, 42, 58, 0.2)',
 };
 
 const formatAsset = (value: number) => (value >= 100000000 ? `${(value / 100000000).toFixed(1)}억원` : `${Math.round(value / 10000).toLocaleString()}만원`);
@@ -348,8 +348,8 @@ const ActionPlanDetail = () => {
         </header>
 
         <section style={{ ...cardStyle, background: '#ffffff', color: '#25385a' }}>
-          <p style={{ margin: 0, color: '#7f95be', fontSize: 11, fontWeight: 700 }}>SELECTED ACTION PLAN</p>
-          <h1 style={{ margin: '8px 0 0', fontSize: 32, lineHeight: 1.2, fontWeight: 800, fontFamily: displayFont }}>{item.title}</h1>
+          <p style={{ margin: 0, color: '#7f95be', fontSize: 11, fontWeight: 600, fontFamily: englishFont }}>SELECTED ACTION PLAN</p>
+          <h1 style={{ margin: '8px 0 0', fontSize: 28, lineHeight: 1.25, fontWeight: 700, fontFamily: displayFont }}>{item.title}</h1>
           <p style={{ margin: '6px 0 0', color: '#5f79aa', fontSize: 13, fontWeight: 700 }}>{scenario.headline}</p>
           <p style={{ margin: '8px 0 0', color: '#5f7395', fontSize: 15 }}>{item.description}</p>
           <p style={{ margin: '10px 0 0', color: '#446392', fontSize: 14, fontWeight: 700 }}>{item.impact}</p>
@@ -359,7 +359,7 @@ const ActionPlanDetail = () => {
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
             <img src={guideImage} alt={guide.name} style={{ width: 76, height: 92, borderRadius: 14, objectFit: 'contain', objectPosition: 'center top', background: '#eef3fb', border: '1px solid #d8e2f2', flexShrink: 0, padding: 2 }} />
             <div style={{ flex: 1 }}>
-              <p style={{ margin: 0, color: '#111d3e', fontWeight: 900, fontSize: 19 }}>{guide.name}</p>
+              <p style={{ margin: 0, color: '#111d3e', fontWeight: 700, fontSize: 17 }}>{guide.name}</p>
               <p style={{ margin: '2px 0 8px', color: '#6a7590', fontSize: 14 }}>{guide.role}</p>
               <div style={{ border: '1px solid #d5ddeb', background: '#f7fafe', borderRadius: 14, padding: '10px 12px', color: '#34405f', fontSize: 14, lineHeight: 1.45, display: 'flex', gap: 8, alignItems: 'flex-start' }}>
                 <Bot size={16} color="#111f45" style={{ marginTop: 2, flexShrink: 0 }} />
@@ -370,7 +370,7 @@ const ActionPlanDetail = () => {
         </section>
 
         <section style={cardStyle}>
-          <h2 style={{ margin: '0 0 10px', fontSize: 18, color: '#132248' }}>실행 단계</h2>
+          <h2 style={{ margin: '0 0 10px', fontSize: 16, color: '#132248', fontWeight: 700 }}>실행 단계</h2>
           <ol style={{ margin: 0, paddingLeft: 20, color: '#34405f', lineHeight: 1.55, fontSize: 14 }}>
             {scenario.steps.map((step) => (
               <li key={step} style={{ marginTop: 6 }}>{step}</li>
@@ -379,7 +379,7 @@ const ActionPlanDetail = () => {
         </section>
 
         <section style={{ ...cardStyle, paddingBottom: 10 }}>
-          <h2 style={{ margin: '0 0 8px', fontSize: 18, color: '#132248' }}>저축 누적 비교 차트</h2>
+          <h2 style={{ margin: '0 0 8px', fontSize: 16, color: '#132248', fontWeight: 700 }}>저축 누적 비교 차트</h2>
           <div style={{ width: '100%', height: 260 }}>
             <ResponsiveContainer>
               <BarChart data={yearlyData}>
@@ -395,7 +395,7 @@ const ActionPlanDetail = () => {
         </section>
 
         <section style={{ ...cardStyle, paddingBottom: 10 }}>
-          <h2 style={{ margin: '0 0 8px', fontSize: 18, color: '#132248' }}>달성률 변화 예상</h2>
+          <h2 style={{ margin: '0 0 8px', fontSize: 16, color: '#132248', fontWeight: 700 }}>달성률 변화 예상</h2>
           <div style={{ width: '100%', height: 230 }}>
             <ResponsiveContainer>
               <ReLineChart data={progressData}>
@@ -410,7 +410,7 @@ const ActionPlanDetail = () => {
         </section>
 
         <section style={cardStyle}>
-          <h2 style={{ margin: '0 0 10px', fontSize: 18, color: '#132248' }}>결과값 기반 실행 표</h2>
+          <h2 style={{ margin: '0 0 10px', fontSize: 16, color: '#132248', fontWeight: 700 }}>결과값 기반 실행 표</h2>
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
               <thead>

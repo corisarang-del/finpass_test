@@ -8,9 +8,8 @@ interface CheckupRouteState {
 }
 
 const cycleOptions = [3, 6, 12] as const;
-const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const displayFont = "'Pretendard Variable', 'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
 const selectedOptionColor = '#1e2a3a';
-const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
 
 const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -56,7 +55,7 @@ const CheckupConsent = () => {
           <Mail size={40} />
         </div>
 
-        <h1 style={{ margin: '16px 0 0', textAlign: 'center', fontSize: 32, lineHeight: 1.24, fontWeight: 800, fontFamily: displayFont, color: '#1d3154' }}>페이스메이커가
+        <h1 style={{ margin: '16px 0 0', textAlign: 'center', fontSize: 28, lineHeight: 1.3, fontWeight: 700, fontFamily: displayFont, color: '#1d3154' }}>페이스메이커가
           <br />
           되어드리겠습니다.
         </h1>
@@ -79,10 +78,10 @@ const CheckupConsent = () => {
                   border: active ? `1px solid ${selectedOptionColor}` : '1px solid #dce5f2',
                   background: active ? selectedOptionColor : '#fff',
                   color: active ? '#ffffff' : '#4a5f82',
-                  fontWeight: 700,
+                  fontWeight: 600,
                   padding: '10px 0',
                   cursor: 'pointer',
-                  boxShadow: active ? selectedOptionShadow : 'none',
+                  boxShadow: active ? '0 6px 14px rgba(30, 42, 58, 0.2)' : 'none',
                   transition: 'all 0.2s ease',
                 }}
               >
@@ -123,11 +122,11 @@ const CheckupConsent = () => {
             borderRadius: 14,
             background: canSubmit && !submitted ? selectedOptionColor : '#b8c7df',
             color: '#fff',
-            fontWeight: 700,
-            fontSize: 16,
-            padding: '14px 14px',
+            fontWeight: 600,
+            fontSize: 15,
+            padding: '12px 14px',
             cursor: canSubmit && !submitted ? 'pointer' : 'not-allowed',
-            boxShadow: canSubmit && !submitted ? selectedOptionShadow : undefined,
+            boxShadow: canSubmit && !submitted ? '0 6px 14px rgba(30, 42, 58, 0.2)' : undefined,
           }}
         >
           {submitted ? '동의 완료' : '점검 동의 및 동반 시작'}
@@ -144,7 +143,7 @@ const CheckupConsent = () => {
             background: '#fff',
             color: '#3b5073',
             fontWeight: 600,
-            fontSize: 14,
+            fontSize: 13,
             padding: '11px 14px',
             cursor: 'pointer',
           }}

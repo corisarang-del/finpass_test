@@ -29,7 +29,8 @@ const GUIDE_IMAGES: Record<string, string> = {
 };
 
 const formatAsset = (value: number) => `${(value / 100000000).toFixed(2)}억`;
-const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const displayFont = "'Pretendard Variable', 'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const englishFont = "'Playfair Display', 'Bodoni MT', 'Didot', 'Times New Roman', serif";
 
 const cardStyle: React.CSSProperties = {
   background: '#fff',
@@ -39,28 +40,27 @@ const cardStyle: React.CSSProperties = {
   boxShadow: '0 8px 24px rgba(37, 64, 110, 0.06)',
 };
 const selectedOptionColor = '#1e2a3a';
-const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
 
 const primaryButtonStyle: React.CSSProperties = {
   border: 'none',
-  borderRadius: 14,
+  borderRadius: 12,
   background: selectedOptionColor,
   color: '#fff',
-  fontWeight: 700,
-  fontSize: 16,
-  padding: '14px 12px',
+  fontWeight: 600,
+  fontSize: 15,
+  padding: '12px 14px',
   cursor: 'pointer',
-  boxShadow: selectedOptionShadow,
+  boxShadow: '0 6px 14px rgba(30, 42, 58, 0.2)',
 };
 
 const secondaryButtonStyle: React.CSSProperties = {
   border: '1px solid #dbe3f1',
-  borderRadius: 14,
+  borderRadius: 12,
   background: '#fff',
   color: '#334766',
-  fontWeight: 700,
-  fontSize: 15,
-  padding: '14px 12px',
+  fontWeight: 600,
+  fontSize: 14,
+  padding: '12px 12px',
   cursor: 'pointer',
 };
 
@@ -115,29 +115,29 @@ const FinalAnalysis = () => {
     <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 420, margin: '0 auto', display: 'grid', gap: 14 }}>
         <section style={{ ...cardStyle, padding: 20 }}>
-          <p style={{ margin: 0, color: '#7f95be', fontWeight: 700, fontSize: 11, letterSpacing: '0.08em' }}>5-YEAR ASSET ROADMAP</p>
+          <p style={{ margin: 0, color: '#7f95be', fontWeight: 600, fontSize: 11, letterSpacing: '0.08em', fontFamily: englishFont }}>5-YEAR ASSET ROADMAP</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10, marginTop: 4 }}>
-            <h1 style={{ margin: 0, fontSize: 38, lineHeight: 1.15, color: '#101c3f', fontWeight: 800, fontFamily: displayFont, letterSpacing: '-0.01em' }}>
+            <h1 style={{ margin: 0, fontSize: 32, lineHeight: 1.2, color: '#101c3f', fontWeight: 700, fontFamily: displayFont, letterSpacing: '-0.01em' }}>
               {name} 님의
               <br />
               미래 자산 등고선
             </h1>
             <div style={{ borderRadius: 14, border: '1px solid #d5deef', background: '#f6f9ff', padding: '8px 10px', textAlign: 'center' }}>
               <p style={{ margin: 0, fontSize: 11, color: '#8693b0', fontWeight: 700 }}>목표 도달률</p>
-              <p style={{ margin: '2px 0 0', color: selectedOptionColor, fontSize: 28, fontWeight: 900 }}>{snapshot.achievementRate}%</p>
+              <p style={{ margin: '2px 0 0', color: selectedOptionColor, fontSize: 24, fontWeight: 700 }}>{snapshot.achievementRate}%</p>
             </div>
           </div>
           <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
             <article style={{ border: '1px solid #d8ece5', background: '#ecfaf4', borderRadius: 12, padding: '10px 10px' }}>
-              <p style={{ margin: 0, fontSize: 12, color: '#1d8a6d', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 5 }}><Sparkles size={14} /> 성실형 자산 빌더</p>
+              <p style={{ margin: 0, fontSize: 12, color: '#1d8a6d', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5 }}><Sparkles size={14} /> 성실형 자산 빌더</p>
               <p style={{ margin: '4px 0 0', fontSize: 11, color: '#5c8f82' }}>규칙적인 실천이 강점</p>
             </article>
             <article style={{ border: '1px solid #dce4f7', background: '#eef3ff', borderRadius: 12, padding: '10px 10px' }}>
-              <p style={{ margin: 0, fontSize: 12, color: '#496de0', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 5 }}><TrendingUp size={14} /> 계속 자산 증가형</p>
+              <p style={{ margin: 0, fontSize: 12, color: '#496de0', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5 }}><TrendingUp size={14} /> 계속 자산 증가형</p>
               <p style={{ margin: '4px 0 0', fontSize: 11, color: '#7288bc' }}>변동성 커버 가능</p>
             </article>
             <article style={{ border: '1px solid #dce4f7', background: '#f2f6ff', borderRadius: 12, padding: '10px 10px' }}>
-              <p style={{ margin: 0, fontSize: 12, color: '#4d66bc', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 5 }}><ShieldCheck size={14} /> 안정적 리스크 구조</p>
+              <p style={{ margin: 0, fontSize: 12, color: '#4d66bc', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5 }}><ShieldCheck size={14} /> 안정적 리스크 구조</p>
               <p style={{ margin: '4px 0 0', fontSize: 11, color: '#7288bc' }}>방어력 우수</p>
             </article>
           </div>
@@ -145,10 +145,10 @@ const FinalAnalysis = () => {
 
         <section style={{ ...cardStyle, padding: 0, overflow: 'hidden' }}>
           <div style={{ padding: '12px 16px 0' }}>
-            <p style={{ margin: 0, color: '#25345e', fontWeight: 900, fontSize: 15, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <p style={{ margin: 0, color: '#25345e', fontWeight: 700, fontSize: 15, display: 'flex', alignItems: 'center', gap: 6 }}>
               <Mountain size={15} color="#7d8cab" /> 자산 고지 시각화
             </p>
-            <p style={{ margin: '2px 0 0', color: '#b0bbd3', fontWeight: 800, fontSize: 11, textAlign: 'right' }}>ASSET TOPOGRAPHY</p>
+            <p style={{ margin: '2px 0 0', color: '#b0bbd3', fontWeight: 600, fontSize: 11, textAlign: 'right', fontFamily: englishFont }}>ASSET TOPOGRAPHY</p>
           </div>
           <div style={{ height: 230, position: 'relative', marginTop: 4, background: 'linear-gradient(180deg,#ffffff 0%,#f8fafe 100%)' }}>
             <div style={{ position: 'absolute', left: 16, right: 16, bottom: 34, borderTop: '3px dashed #c7d4f2' }} />
@@ -174,16 +174,16 @@ const FinalAnalysis = () => {
               return (
                 <article key={item.year} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
                   <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                    <div style={{ width: 28, height: 28, borderRadius: 8, background: idx === 0 ? selectedOptionColor : '#f2f5fb', color: idx === 0 ? '#fff' : '#91a0c2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 12 }}>
+                    <div style={{ width: 28, height: 28, borderRadius: 8, background: idx === 0 ? selectedOptionColor : '#f2f5fb', color: idx === 0 ? '#fff' : '#91a0c2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 12 }}>
                       {idx + 1}
                     </div>
                     <div>
-                      <p style={{ margin: 0, color: '#1f2d4d', fontWeight: 800 }}>{title}</p>
+                      <p style={{ margin: 0, color: '#1f2d4d', fontWeight: 700 }}>{title}</p>
                       <p style={{ margin: '2px 0 0', color: '#93a0bc', fontSize: 12 }}>{note}</p>
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <p style={{ margin: 0, color: '#1f2a40', fontWeight: 900, fontSize: 26 }}>{formatAsset(item.asset)}</p>
+                    <p style={{ margin: 0, color: '#1f2a40', fontWeight: 700, fontSize: 22 }}>{formatAsset(item.asset)}</p>
                     <p style={{ margin: '2px 0 0', color: '#2fb481', fontWeight: 800, fontSize: 12 }}>+{Math.round(item.increase / 1000000).toLocaleString()}만 증가</p>
                   </div>
                 </article>
@@ -200,14 +200,14 @@ const FinalAnalysis = () => {
               style={{ width: 76, height: 92, borderRadius: 14, objectFit: 'contain', objectPosition: 'center top', background: '#eef3fb', border: '1px solid #d8e2f2', flexShrink: 0, padding: 2 }}
             />
             <div style={{ flex: 1 }}>
-              <p style={{ margin: 0, color: '#111d3e', fontWeight: 900 }}>{guide.name}</p>
+              <p style={{ margin: 0, color: '#111d3e', fontWeight: 700 }}>{guide.name}</p>
               <p style={{ margin: '2px 0 8px', color: '#6a7590', fontSize: 12 }}>{guide.role}</p>
               <div style={{ border: '1px solid #d5ddeb', background: '#f7fafe', borderRadius: 14, padding: '10px 12px', color: '#34405f', fontSize: 14, lineHeight: 1.45 }}>
                 {finalComment}
               </div>
             </div>
           </div>
-          <button type="button" onClick={onShareVisionCard} style={{ ...secondaryButtonStyle, marginTop: 12, width: '100%', fontSize: 20, display: 'flex', justifyContent: 'center', gap: 8, alignItems: 'center' }}>
+          <button type="button" onClick={onShareVisionCard} style={{ ...secondaryButtonStyle, marginTop: 12, width: '100%', fontSize: 15, display: 'flex', justifyContent: 'center', gap: 8, alignItems: 'center' }}>
             <Share2 size={20} />
             비전 카드 공유하기
           </button>

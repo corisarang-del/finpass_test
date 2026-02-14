@@ -27,20 +27,20 @@ const cardStyle: React.CSSProperties = {
   boxShadow: '0 8px 24px rgba(37, 64, 110, 0.06)',
 };
 const selectedOptionColor = '#1e2a3a';
-const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
+const englishFont = "'Playfair Display', 'Bodoni MT', 'Didot', 'Times New Roman', serif";
 
 const primaryButtonStyle: React.CSSProperties = {
   border: 'none',
-  borderRadius: 14,
+  borderRadius: 12,
   background: selectedOptionColor,
   color: '#fff',
-  fontWeight: 700,
-  fontSize: 16,
-  padding: '14px 16px',
+  fontWeight: 600,
+  fontSize: 15,
+  padding: '12px 15px',
   cursor: 'pointer',
-  boxShadow: selectedOptionShadow,
+  boxShadow: '0 6px 14px rgba(30, 42, 58, 0.2)',
 };
-const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const displayFont = "'Pretendard Variable', 'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
 
 const toAsset = (value: number) => `${(value / 100000000).toFixed(1)}억`;
 
@@ -83,16 +83,16 @@ const VisionBoard = () => {
         <section style={{ ...cardStyle, background: '#ffffff', color: '#223657', position: 'relative', overflow: 'hidden', padding: 20 }}>
           <div style={{ position: 'absolute', top: -60, right: -60, width: 190, height: 190, borderRadius: 999, background: '#edf4ff', zIndex: 0 }} />
           <div style={{ position: 'relative', zIndex: 1, paddingRight: 12 }}>
-            <p style={{ margin: 0, color: '#6f8fc1', fontWeight: 700, fontSize: 11, letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <p style={{ margin: 0, color: '#6f8fc1', fontWeight: 600, fontSize: 11, letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 6, fontFamily: englishFont }}>
               <Stars size={14} /> VISION BOARD
             </p>
-            <h1 style={{ margin: '8px 0 0', fontSize: 30, lineHeight: 1.24, fontWeight: 800, fontFamily: displayFont }}>{summary.headline}</h1>
+            <h1 style={{ margin: '8px 0 0', fontSize: 26, lineHeight: 1.3, fontWeight: 700, fontFamily: displayFont }}>{summary.headline}</h1>
             <p style={{ margin: '8px 0 0', color: '#6e82a9', fontSize: 14 }}>목표와 가치를 시각적으로 고정하고, 현실 입력으로 연결하겠습니다.</p>
           </div>
         </section>
 
         <section style={cardStyle}>
-          <p style={{ margin: 0, color: '#14224a', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <p style={{ margin: 0, color: '#14224a', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
             <Target size={15} color="#2f67d8" /> 목표 자산 항로
           </p>
           <p style={{ margin: '8px 0 0', color: '#5f6f90', fontSize: 13, lineHeight: 1.5 }}>
@@ -117,15 +117,15 @@ const VisionBoard = () => {
 
         {summary.goalCards.map((card, idx) => (
           <section key={card.title} style={cardStyle}>
-            <p style={{ margin: 0, color: '#7280a3', fontWeight: 700, fontSize: 12 }}>VISION {idx + 1}</p>
-            <p style={{ margin: '6px 0 0', color: '#14224a', fontWeight: 900, fontSize: 24 }}>{card.title}</p>
+            <p style={{ margin: 0, color: '#7280a3', fontWeight: 600, fontSize: 12, fontFamily: englishFont }}>VISION {idx + 1}</p>
+            <p style={{ margin: '6px 0 0', color: '#14224a', fontWeight: 700, fontSize: 20 }}>{card.title}</p>
             <p style={{ margin: '4px 0 0', color: '#48608f', fontWeight: 700 }}>{card.targetYear}년 목표</p>
             <p style={{ margin: '8px 0 0', color: '#5f6f90', fontSize: 14 }}>{card.note}</p>
           </section>
         ))}
 
         <section style={cardStyle}>
-          <p style={{ margin: 0, color: '#14224a', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <p style={{ margin: 0, color: '#14224a', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
             <Flag size={15} color="#2f67d8" /> 실행 모드
           </p>
           <p style={{ margin: '8px 0 0', color: '#5f6f90', lineHeight: 1.5 }}>

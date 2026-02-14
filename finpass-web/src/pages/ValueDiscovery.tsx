@@ -15,7 +15,8 @@ interface ValueProfile {
 
 const GOAL_OPTIONS = ['내 집 마련', '경제적 자유', '자산 증식', '안정 자산 구축', '커리어 성장', '여행/경험'];
 const VALUE_OPTIONS = ['안정', '성장', '자유', '건강', '가족', '균형', '몰입'];
-const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const displayFont = "'Pretendard Variable', 'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const englishFont = "'Playfair Display', 'Bodoni MT', 'Didot', 'Times New Roman', serif";
 const selectedOptionColor = '#1e2a3a';
 const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
 
@@ -29,14 +30,14 @@ const cardStyle: React.CSSProperties = {
 
 const primaryButtonStyle: React.CSSProperties = {
   border: 'none',
-  borderRadius: 14,
-  background: '#4c8fe9',
+  borderRadius: 12,
+  background: selectedOptionColor,
   color: '#fff',
-  fontWeight: 700,
-  fontSize: 16,
-  padding: '14px 16px',
+  fontWeight: 600,
+  fontSize: 15,
+  padding: '12px 15px',
   cursor: 'pointer',
-  boxShadow: '0 10px 20px rgba(76, 143, 233, 0.28)',
+  boxShadow: '0 6px 14px rgba(30, 42, 58, 0.2)',
 };
 
 const chipStyle = (active: boolean): React.CSSProperties => ({
@@ -142,29 +143,29 @@ const ValueDiscovery = () => {
         </header>
 
         <section style={{ ...cardStyle, background: '#fff', padding: '22px 18px' }}>
-          <p style={{ margin: 0, color: '#8ea1c2', fontWeight: 700, letterSpacing: '0.12em', fontSize: 11 }}>STEP 01</p>
-          <h1 style={{ margin: '6px 0 0', color: '#0f1a36', fontSize: 30, lineHeight: 1.2, fontWeight: 800, fontFamily: displayFont }}>{name} 님의 가치 지도</h1>
+          <p style={{ margin: 0, color: '#8ea1c2', fontWeight: 600, letterSpacing: '0.12em', fontSize: 11, fontFamily: englishFont }}>STEP 01</p>
+          <h1 style={{ margin: '6px 0 0', color: '#0f1a36', fontSize: 26, lineHeight: 1.3, fontWeight: 700, fontFamily: displayFont }}>{name} 님의 가치 지도</h1>
           <p style={{ margin: '8px 0 0', color: '#607292', fontSize: 15 }}>{summary}</p>
           <div style={{ marginTop: 14, borderTop: '1px solid #e7edf8', paddingTop: 12, display: 'grid', gap: 8 }}>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ color: '#7e91b3', fontSize: 12, fontWeight: 700 }}>선택된 목표</span>
+              <span style={{ color: '#7e91b3', fontSize: 12, fontWeight: 600 }}>선택된 목표</span>
               {coreGoals.length === 0 ? (
                 <span style={{ color: '#9aabc8', fontSize: 12 }}>아직 선택되지 않음</span>
               ) : (
                 coreGoals.map((goal) => (
-                  <span key={goal} style={{ borderRadius: 999, border: '1px solid #d7e5ff', background: '#f3f8ff', color: '#305ea3', padding: '4px 10px', fontSize: 12, fontWeight: 700 }}>
+                  <span key={goal} style={{ borderRadius: 999, border: '1px solid #d7e5ff', background: '#f3f8ff', color: '#305ea3', padding: '4px 10px', fontSize: 12, fontWeight: 600 }}>
                     {goal}
                   </span>
                 ))
               )}
             </div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-              <span style={{ color: '#7e91b3', fontSize: 12, fontWeight: 700 }}>선택된 가치</span>
+              <span style={{ color: '#7e91b3', fontSize: 12, fontWeight: 600 }}>선택된 가치</span>
               {coreValues.length === 0 ? (
                 <span style={{ color: '#9aabc8', fontSize: 12 }}>아직 선택되지 않음</span>
               ) : (
                 coreValues.map((value) => (
-                  <span key={value} style={{ borderRadius: 999, border: '1px solid #d7e5ff', background: '#f3f8ff', color: '#305ea3', padding: '4px 10px', fontSize: 12, fontWeight: 700 }}>
+                  <span key={value} style={{ borderRadius: 999, border: '1px solid #d7e5ff', background: '#f3f8ff', color: '#305ea3', padding: '4px 10px', fontSize: 12, fontWeight: 600 }}>
                     {value}
                   </span>
                 ))
@@ -175,7 +176,7 @@ const ValueDiscovery = () => {
 
         <section style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
           <article style={cardStyle}>
-            <p style={{ margin: 0, color: '#14224a', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 6, fontSize: 16 }}>
+            <p style={{ margin: 0, color: '#14224a', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6, fontSize: 15 }}>
               <Sparkles size={16} color="#2f67d8" /> 핵심 목표(최대 2개)
             </p>
             <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -188,7 +189,7 @@ const ValueDiscovery = () => {
           </article>
 
           <article style={cardStyle}>
-            <p style={{ margin: 0, color: '#14224a', fontWeight: 900, fontSize: 16 }}>지키고 싶은 가치(최대 2개)</p>
+            <p style={{ margin: 0, color: '#14224a', fontWeight: 700, fontSize: 15 }}>지키고 싶은 가치(최대 2개)</p>
             <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
               {VALUE_OPTIONS.map((item) => (
                 <button key={item} type="button" onClick={() => setCoreValues((prev) => toggleItem(prev, item))} style={chipStyle(coreValues.includes(item))}>
@@ -200,7 +201,7 @@ const ValueDiscovery = () => {
         </section>
 
         <section style={cardStyle}>
-          <p style={{ margin: 0, color: '#14224a', fontWeight: 900, fontSize: 16 }}>동기 스타일</p>
+          <p style={{ margin: 0, color: '#14224a', fontWeight: 700, fontSize: 15 }}>동기 스타일</p>
           <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
             {[
               { key: 'steady', label: '꾸준형' },
@@ -237,7 +238,7 @@ const ValueDiscovery = () => {
           </p>
         </section>
 
-        <button type="button" onClick={moveNext} disabled={!canProceed} style={{ ...primaryButtonStyle, background: canProceed ? '#4c8fe9' : '#b8c7df', cursor: canProceed ? 'pointer' : 'not-allowed' }}>
+        <button type="button" onClick={moveNext} disabled={!canProceed} style={{ ...primaryButtonStyle, background: canProceed ? selectedOptionColor : '#b8c7df', cursor: canProceed ? 'pointer' : 'not-allowed' }}>
           비전보드 만들기 <ChevronRight size={18} style={{ display: 'inline-block', verticalAlign: 'middle' }} />
         </button>
       </main>
