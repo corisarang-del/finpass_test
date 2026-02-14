@@ -21,24 +21,26 @@ interface VisionBoardSummary {
 
 const cardStyle: React.CSSProperties = {
   background: '#ffffff',
-  borderRadius: 22,
-  border: '1px solid #dbe2ec',
+  borderRadius: 18,
+  border: '1px solid #e2e8f4',
   padding: 16,
-  boxShadow: '0 10px 24px rgba(10, 23, 53, 0.05)',
+  boxShadow: '0 8px 24px rgba(37, 64, 110, 0.06)',
 };
+const selectedOptionColor = '#1e2a3a';
+const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
 
 const primaryButtonStyle: React.CSSProperties = {
   border: 'none',
-  borderRadius: 22,
-  background: '#1e2f49',
+  borderRadius: 14,
+  background: selectedOptionColor,
   color: '#fff',
-  fontWeight: 900,
-  fontSize: 17,
-  padding: '18px 16px',
+  fontWeight: 700,
+  fontSize: 16,
+  padding: '14px 16px',
   cursor: 'pointer',
-  boxShadow: '0 8px 18px rgba(20, 33, 58, 0.22)',
+  boxShadow: selectedOptionShadow,
 };
-const displayFont = "'Cormorant Garamond', 'Noto Serif KR', 'Times New Roman', serif";
+const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
 
 const toAsset = (value: number) => `${(value / 100000000).toFixed(1)}억`;
 
@@ -76,15 +78,17 @@ const VisionBoard = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #edf2f8 100%)', padding: '20px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 430, margin: '0 auto', display: 'grid', gap: 14 }}>
-        <section style={{ ...cardStyle, background: 'linear-gradient(145deg,#182d5c,#213a73)', color: '#fff', position: 'relative', overflow: 'hidden', padding: 20 }}>
-          <div style={{ position: 'absolute', top: -30, right: -20, width: 130, height: 130, borderRadius: 999, background: 'rgba(255,255,255,0.08)' }} />
-          <p style={{ margin: 0, color: '#8dd9c5', fontWeight: 700, fontSize: 12, letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 6 }}>
-            <Stars size={14} /> VISION BOARD
-          </p>
-          <h1 style={{ margin: '8px 0 0', fontSize: 34, lineHeight: 1.14, fontWeight: 900, fontFamily: displayFont }}>{summary.headline}</h1>
-          <p style={{ margin: '8px 0 0', color: '#d2dbee', fontSize: 14 }}>목표와 가치를 시각적으로 고정하고, 현실 입력으로 연결하겠습니다.</p>
+        <section style={{ ...cardStyle, background: '#ffffff', color: '#223657', position: 'relative', overflow: 'hidden', padding: 20 }}>
+          <div style={{ position: 'absolute', top: -60, right: -60, width: 190, height: 190, borderRadius: 999, background: '#edf4ff', zIndex: 0 }} />
+          <div style={{ position: 'relative', zIndex: 1, paddingRight: 12 }}>
+            <p style={{ margin: 0, color: '#6f8fc1', fontWeight: 700, fontSize: 11, letterSpacing: '0.08em', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Stars size={14} /> VISION BOARD
+            </p>
+            <h1 style={{ margin: '8px 0 0', fontSize: 30, lineHeight: 1.24, fontWeight: 800, fontFamily: displayFont }}>{summary.headline}</h1>
+            <p style={{ margin: '8px 0 0', color: '#6e82a9', fontSize: 14 }}>목표와 가치를 시각적으로 고정하고, 현실 입력으로 연결하겠습니다.</p>
+          </div>
         </section>
 
         <section style={cardStyle}>
@@ -94,16 +98,16 @@ const VisionBoard = () => {
           <p style={{ margin: '8px 0 0', color: '#5f6f90', fontSize: 13, lineHeight: 1.5 }}>
             현재 기준점부터 중간 목표를 거쳐 최종 목표 자산으로 이동하는 경로를 보여드립니다. 아래 수치는 비전보드 기반 초안이며, 다음 단계에서 자동 보정됩니다.
           </p>
-          <div style={{ marginTop: 12, height: 170, borderRadius: 16, background: 'linear-gradient(180deg,#f5f8ff 0%, #eef4ff 100%)', border: '1px solid #dae5fb', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ marginTop: 12, height: 170, borderRadius: 14, background: 'linear-gradient(180deg,#f7faff 0%, #f0f5ff 100%)', border: '1px solid #dbe5f7', position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', left: 14, right: 14, bottom: 28, borderTop: '2px dashed #b8c8ee' }} />
-            <div style={{ position: 'absolute', left: 14, right: 18, bottom: 28, height: 88, borderTop: '3px solid #2f67d8', borderRadius: '100% 100% 0 0 / 84% 84% 0 0' }} />
+            <div style={{ position: 'absolute', left: 14, right: 18, bottom: 28, height: 88, borderTop: `3px solid ${selectedOptionColor}`, borderRadius: '100% 100% 0 0 / 84% 84% 0 0' }} />
             {[
               { left: '14%', bottom: 32, label: '현재', value: toAsset(pathMetrics.now) },
               { left: '49%', bottom: 72, label: '중간', value: toAsset(pathMetrics.mid) },
               { left: '82%', bottom: 112, label: '목표', value: toAsset(pathMetrics.target) },
             ].map((point) => (
               <div key={point.label} style={{ position: 'absolute', left: point.left, bottom: point.bottom }}>
-                <div style={{ width: 12, height: 12, borderRadius: 999, background: '#2f67d8', border: '2px solid #fff', boxShadow: '0 0 0 3px #c3d6ff' }} />
+                <div style={{ width: 12, height: 12, borderRadius: 999, background: selectedOptionColor, border: '2px solid #fff', boxShadow: '0 0 0 3px #d8deea' }} />
                 <p style={{ margin: '6px 0 0', fontSize: 11, fontWeight: 800, color: '#4c5f88' }}>{point.label}</p>
                 <p style={{ margin: 0, fontSize: 11, color: '#6e7fa6' }}>{point.value}</p>
               </div>

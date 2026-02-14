@@ -30,7 +30,9 @@ const ACTION_ITEMS: SliderActionItem[] = [
   { key: 'delivery', label: '배달비 아끼기', icon: 'delivery', max: 200000, step: 10000 },
   { key: 'subscription', label: '구독비 줄이기', icon: 'subscription', max: 50000, step: 5000 },
 ];
-const displayFont = "'Cormorant Garamond', 'Noto Serif KR', 'Times New Roman', serif";
+const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const selectedOptionColor = '#1e2a3a';
+const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
 
 const GUIDE_IMAGES: Record<string, string> = {
   han: agentHanImg,
@@ -51,22 +53,22 @@ const toManwon = (value: number) => `+${Math.round(value / 10000).toLocaleString
 
 const cardStyle: React.CSSProperties = {
   background: '#fff',
-  borderRadius: 22,
-  border: '1px solid #dbe2ec',
+  borderRadius: 18,
+  border: '1px solid #e2e8f4',
   padding: 16,
-  boxShadow: '0 10px 28px rgba(10, 23, 53, 0.05)',
+  boxShadow: '0 8px 24px rgba(37, 64, 110, 0.06)',
 };
 
 const primaryButtonStyle: React.CSSProperties = {
   border: 'none',
-  borderRadius: 22,
-  background: '#1e2f49',
+  borderRadius: 14,
+  background: selectedOptionColor,
   color: '#fff',
-  fontWeight: 900,
-  fontSize: 18,
-  padding: '18px 18px',
+  fontWeight: 700,
+  fontSize: 16,
+  padding: '14px 16px',
   cursor: 'pointer',
-  boxShadow: '0 8px 18px rgba(20, 33, 58, 0.22)',
+  boxShadow: selectedOptionShadow,
 };
 
 const IconByType = ({ type }: { type: SliderActionItem['icon'] }) => {
@@ -151,12 +153,12 @@ const LiveSimulation = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #eef2f7 100%)', padding: '18px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 420, margin: '0 auto', display: 'grid', gap: 14 }}>
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...cardStyle, padding: '12px 14px' }}>
           <div>
-            <p style={{ margin: 0, color: '#798196', fontSize: 12, fontWeight: 700 }}>PINPASS</p>
-            <h1 style={{ margin: '4px 0 0', color: '#161d2f', fontSize: 18, fontWeight: 900 }}>가능성 탐색 & What If</h1>
+            <p style={{ margin: 0, color: '#8ea2c4', fontSize: 11, fontWeight: 700 }}>FINPASS</p>
+            <h1 style={{ margin: '4px 0 0', color: '#1a2f53', fontSize: 17, fontWeight: 700 }}>가능성 탐색 & What If</h1>
           </div>
           <button type="button" onClick={() => navigate('/result', { state: { answers, categoryId, planInputs } })} style={{ border: '1px solid #d1d8e5', background: '#fff', borderRadius: 14, width: 40, height: 40, cursor: 'pointer' }}>
             <RotateCcw size={16} color="#3a445d" />
@@ -164,7 +166,7 @@ const LiveSimulation = () => {
         </header>
 
         <section style={{ ...cardStyle, padding: 20 }}>
-          <h2 style={{ margin: 0, color: '#101c3f', fontWeight: 900, fontSize: 42, lineHeight: 1.2, fontFamily: displayFont }}>이미 잘하고 계십니다.</h2>
+          <h2 style={{ margin: 0, color: '#101c3f', fontWeight: 800, fontSize: 36, lineHeight: 1.2, fontFamily: displayFont }}>이미 잘하고 계십니다.</h2>
           <p style={{ margin: '10px 0 0', color: '#5b6786', fontSize: 18, lineHeight: 1.5 }}>
             현재 저축 성향은 <strong style={{ color: '#2f67d8' }}>{savingsScore}%</strong>로,
             <br />

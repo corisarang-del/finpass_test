@@ -1,0 +1,13 @@
+# 사용자 프롬프트 기록
+- 시각 참고: 업로드한 이미지([Image #1])
+- 대상 파일:
+  - finpass-web/src/pages/ActionPlanDetail.tsx
+  - finpass-web/src/pages/CheckupConsent.tsx
+  - finpass-web/src/pages/FinalAnalysis.tsx
+  - finpass-web/src/pages/LiveSimulation.tsx
+  - finpass-web/src/pages/VisionBoard.tsx
+  - finpass-web/src/pages/ValueDiscovery.tsx
+- 요청 내용:
+  - 업로드 이미지의 폰트/색감/버튼 레이아웃 참고
+  - 현재 촌스러운 느낌 제거
+  - 디자인만 수정

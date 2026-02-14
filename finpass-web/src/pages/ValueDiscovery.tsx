@@ -15,37 +15,41 @@ interface ValueProfile {
 
 const GOAL_OPTIONS = ['내 집 마련', '경제적 자유', '자산 증식', '안정 자산 구축', '커리어 성장', '여행/경험'];
 const VALUE_OPTIONS = ['안정', '성장', '자유', '건강', '가족', '균형', '몰입'];
-const displayFont = "'Cormorant Garamond', 'Noto Serif KR', 'Times New Roman', serif";
+const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const selectedOptionColor = '#1e2a3a';
+const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
 
 const cardStyle: React.CSSProperties = {
   background: '#ffffff',
-  borderRadius: 22,
-  border: '1px solid #dbe2ec',
+  borderRadius: 18,
+  border: '1px solid #e2e8f4',
   padding: 16,
-  boxShadow: '0 10px 24px rgba(10, 23, 53, 0.05)',
+  boxShadow: '0 8px 24px rgba(37, 64, 110, 0.06)',
 };
 
 const primaryButtonStyle: React.CSSProperties = {
   border: 'none',
-  borderRadius: 22,
-  background: '#1e2f49',
+  borderRadius: 14,
+  background: '#4c8fe9',
   color: '#fff',
-  fontWeight: 900,
-  fontSize: 17,
-  padding: '18px 16px',
+  fontWeight: 700,
+  fontSize: 16,
+  padding: '14px 16px',
   cursor: 'pointer',
-  boxShadow: '0 8px 18px rgba(20, 33, 58, 0.22)',
+  boxShadow: '0 10px 20px rgba(76, 143, 233, 0.28)',
 };
 
 const chipStyle = (active: boolean): React.CSSProperties => ({
-  border: active ? '2px solid #0f1626' : '1px solid #d7deea',
-  background: active ? '#1e2f49' : '#fff',
-  color: active ? '#ffffff' : '#223153',
-  borderRadius: 16,
-  padding: '11px 13px',
-  fontWeight: 700,
+  border: active ? `1px solid ${selectedOptionColor}` : '1px solid #dde5f2',
+  background: active ? selectedOptionColor : '#fff',
+  color: active ? '#ffffff' : '#2a3a58',
+  borderRadius: 12,
+  padding: '10px 12px',
+  fontWeight: 600,
   fontSize: 14,
   cursor: 'pointer',
+  boxShadow: active ? selectedOptionShadow : 'none',
+  transition: 'all 0.2s ease',
 });
 
 const toArr = (value: unknown) => {
@@ -127,48 +131,72 @@ const ValueDiscovery = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #edf2f8 100%)', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
-      <main style={{ maxWidth: 860, margin: '0 auto', padding: '0 14px 30px', display: 'grid', gap: 14 }}>
-        <header style={{ height: 68, display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#6e7f9f' }}>
-          <button type="button" onClick={() => navigate(-1)} style={{ border: 'none', background: 'transparent', color: '#617494', fontSize: 14, display: 'inline-flex', alignItems: 'center', gap: 6, cursor: 'pointer', fontWeight: 700 }}>
-            <ArrowLeft size={18} /> Home
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+      <main style={{ maxWidth: 760, margin: '0 auto', padding: '16px 14px 30px', display: 'grid', gap: 12 }}>
+        <header style={{ height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#6e7f9f' }}>
+          <button type="button" onClick={() => navigate(-1)} aria-label="뒤로 가기" style={{ border: '1px solid #e0e7f3', borderRadius: 999, background: '#fff', color: '#617494', fontSize: 13, display: 'inline-flex', alignItems: 'center', gap: 6, cursor: 'pointer', fontWeight: 700, width: 36, height: 36, justifyContent: 'center' }}>
+            <ArrowLeft size={18} />
           </button>
-          <p style={{ margin: 0, color: '#1a2440', fontWeight: 800, display: 'inline-flex', gap: 8, alignItems: 'center', fontSize: 18 }}><Search size={18} /> 발견</p>
-          <p style={{ margin: 0, color: '#7d8daa', fontSize: 14, fontWeight: 700 }}>0%</p>
+          <p style={{ margin: 0, color: '#1d3357', fontWeight: 700, display: 'inline-flex', gap: 8, alignItems: 'center', fontSize: 16 }}><Search size={18} /> 발견</p>
+          <p style={{ margin: 0, color: '#8da0c0', fontSize: 13, fontWeight: 600 }}>1 / 6</p>
         </header>
 
-        <section style={{ ...cardStyle, background: '#fff', padding: '26px 20px' }}>
-          <p style={{ margin: 0, color: '#8ea1c2', fontWeight: 800, letterSpacing: '0.12em', fontSize: 12 }}>STEP 01</p>
-          <h1 style={{ margin: '8px 0 0', color: '#0f1a36', fontSize: 42, lineHeight: 1.1, fontWeight: 900, fontFamily: displayFont }}>발견</h1>
-          <p style={{ margin: '6px 0 0', color: '#607292', fontSize: 16 }}>나에 대한 이야기</p>
-          <div style={{ marginTop: 16, borderTop: '1px solid #e7edf8', paddingTop: 12 }}>
-            <p style={{ margin: 0, color: '#162440', fontSize: 32, fontWeight: 800, fontFamily: displayFont }}>{name} 님의 가치 발견</p>
-            <p style={{ margin: '6px 0 0', color: '#6a7a99', fontSize: 15 }}>{summary}</p>
+        <section style={{ ...cardStyle, background: '#fff', padding: '22px 18px' }}>
+          <p style={{ margin: 0, color: '#8ea1c2', fontWeight: 700, letterSpacing: '0.12em', fontSize: 11 }}>STEP 01</p>
+          <h1 style={{ margin: '6px 0 0', color: '#0f1a36', fontSize: 30, lineHeight: 1.2, fontWeight: 800, fontFamily: displayFont }}>{name} 님의 가치 지도</h1>
+          <p style={{ margin: '8px 0 0', color: '#607292', fontSize: 15 }}>{summary}</p>
+          <div style={{ marginTop: 14, borderTop: '1px solid #e7edf8', paddingTop: 12, display: 'grid', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ color: '#7e91b3', fontSize: 12, fontWeight: 700 }}>선택된 목표</span>
+              {coreGoals.length === 0 ? (
+                <span style={{ color: '#9aabc8', fontSize: 12 }}>아직 선택되지 않음</span>
+              ) : (
+                coreGoals.map((goal) => (
+                  <span key={goal} style={{ borderRadius: 999, border: '1px solid #d7e5ff', background: '#f3f8ff', color: '#305ea3', padding: '4px 10px', fontSize: 12, fontWeight: 700 }}>
+                    {goal}
+                  </span>
+                ))
+              )}
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ color: '#7e91b3', fontSize: 12, fontWeight: 700 }}>선택된 가치</span>
+              {coreValues.length === 0 ? (
+                <span style={{ color: '#9aabc8', fontSize: 12 }}>아직 선택되지 않음</span>
+              ) : (
+                coreValues.map((value) => (
+                  <span key={value} style={{ borderRadius: 999, border: '1px solid #d7e5ff', background: '#f3f8ff', color: '#305ea3', padding: '4px 10px', fontSize: 12, fontWeight: 700 }}>
+                    {value}
+                  </span>
+                ))
+              )}
+            </div>
           </div>
         </section>
 
-        <section style={cardStyle}>
-          <p style={{ margin: 0, color: '#14224a', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 6, fontSize: 16 }}>
-            <Sparkles size={16} color="#2f67d8" /> 핵심 목표(최대 2개)
-          </p>
-          <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-            {GOAL_OPTIONS.map((item) => (
-              <button key={item} type="button" onClick={() => setCoreGoals((prev) => toggleItem(prev, item))} style={chipStyle(coreGoals.includes(item))}>
-                {item}
-              </button>
-            ))}
-          </div>
-        </section>
+        <section style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
+          <article style={cardStyle}>
+            <p style={{ margin: 0, color: '#14224a', fontWeight: 900, display: 'flex', alignItems: 'center', gap: 6, fontSize: 16 }}>
+              <Sparkles size={16} color="#2f67d8" /> 핵심 목표(최대 2개)
+            </p>
+            <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {GOAL_OPTIONS.map((item) => (
+                <button key={item} type="button" onClick={() => setCoreGoals((prev) => toggleItem(prev, item))} style={chipStyle(coreGoals.includes(item))}>
+                  {item}
+                </button>
+              ))}
+            </div>
+          </article>
 
-        <section style={cardStyle}>
-          <p style={{ margin: 0, color: '#14224a', fontWeight: 900, fontSize: 16 }}>지키고 싶은 가치(최대 2개)</p>
-          <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-            {VALUE_OPTIONS.map((item) => (
-              <button key={item} type="button" onClick={() => setCoreValues((prev) => toggleItem(prev, item))} style={chipStyle(coreValues.includes(item))}>
-                {item}
-              </button>
-            ))}
-          </div>
+          <article style={cardStyle}>
+            <p style={{ margin: 0, color: '#14224a', fontWeight: 900, fontSize: 16 }}>지키고 싶은 가치(최대 2개)</p>
+            <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {VALUE_OPTIONS.map((item) => (
+                <button key={item} type="button" onClick={() => setCoreValues((prev) => toggleItem(prev, item))} style={chipStyle(coreValues.includes(item))}>
+                  {item}
+                </button>
+              ))}
+            </div>
+          </article>
         </section>
 
         <section style={cardStyle}>
@@ -186,13 +214,15 @@ const ValueDiscovery = () => {
                   type="button"
                   onClick={() => setMotivationStyle(item.key as ValueProfile['motivationStyle'])}
                   style={{
-                    borderRadius: 16,
-                    border: active ? '2px solid #0f1626' : '1px solid #d7deea',
-                    background: active ? '#1e2f49' : '#fff',
-                    color: active ? '#fff' : '#21315a',
-                    fontWeight: 800,
+                    borderRadius: 12,
+                    border: active ? `1px solid ${selectedOptionColor}` : '1px solid #dde5f2',
+                    background: active ? selectedOptionColor : '#fff',
+                    color: active ? '#ffffff' : '#21315a',
+                    fontWeight: 700,
                     padding: '12px 0',
                     cursor: 'pointer',
+                    boxShadow: active ? selectedOptionShadow : 'none',
+                    transition: 'all 0.2s ease',
                   }}
                 >
                   {item.label}
@@ -200,9 +230,14 @@ const ValueDiscovery = () => {
               );
             })}
           </div>
+          <p style={{ margin: '10px 0 0', color: '#5d7397', fontSize: 13 }}>
+            {motivationStyle === 'steady' && '꾸준형: 안정적인 루틴으로 목표 달성 속도를 유지해.'}
+            {motivationStyle === 'balance' && '균형형: 성과와 삶의 균형을 함께 챙기는 방식이야.'}
+            {motivationStyle === 'challenge' && '도전형: 목표 시점을 앞당기는 공격적인 실행 방식이야.'}
+          </p>
         </section>
 
-        <button type="button" onClick={moveNext} disabled={!canProceed} style={{ ...primaryButtonStyle, background: canProceed ? '#1e2f49' : '#a7b1c9', cursor: canProceed ? 'pointer' : 'not-allowed' }}>
+        <button type="button" onClick={moveNext} disabled={!canProceed} style={{ ...primaryButtonStyle, background: canProceed ? '#4c8fe9' : '#b8c7df', cursor: canProceed ? 'pointer' : 'not-allowed' }}>
           비전보드 만들기 <ChevronRight size={18} style={{ display: 'inline-block', verticalAlign: 'middle' }} />
         </button>
       </main>

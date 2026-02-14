@@ -29,36 +29,38 @@ const GUIDE_IMAGES: Record<string, string> = {
 };
 
 const formatAsset = (value: number) => `${(value / 100000000).toFixed(2)}억`;
-const displayFont = "'Cormorant Garamond', 'Noto Serif KR', 'Times New Roman', serif";
+const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
 
 const cardStyle: React.CSSProperties = {
   background: '#fff',
-  borderRadius: 22,
-  border: '1px solid #dbe2ec',
+  borderRadius: 18,
+  border: '1px solid #e2e8f4',
   padding: 16,
-  boxShadow: '0 10px 28px rgba(10, 23, 53, 0.05)',
+  boxShadow: '0 8px 24px rgba(37, 64, 110, 0.06)',
 };
+const selectedOptionColor = '#1e2a3a';
+const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
 
 const primaryButtonStyle: React.CSSProperties = {
   border: 'none',
-  borderRadius: 22,
-  background: '#1e2f49',
+  borderRadius: 14,
+  background: selectedOptionColor,
   color: '#fff',
-  fontWeight: 900,
+  fontWeight: 700,
   fontSize: 16,
-  padding: '16px 12px',
+  padding: '14px 12px',
   cursor: 'pointer',
-  boxShadow: '0 8px 18px rgba(20, 33, 58, 0.22)',
+  boxShadow: selectedOptionShadow,
 };
 
 const secondaryButtonStyle: React.CSSProperties = {
-  border: '1px solid #d1d8e5',
-  borderRadius: 22,
+  border: '1px solid #dbe3f1',
+  borderRadius: 14,
   background: '#fff',
-  color: '#38415a',
-  fontWeight: 800,
-  fontSize: 16,
-  padding: '16px 12px',
+  color: '#334766',
+  fontWeight: 700,
+  fontSize: 15,
+  padding: '14px 12px',
   cursor: 'pointer',
 };
 
@@ -110,19 +112,19 @@ const FinalAnalysis = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(160deg,#f4f6f9 0%, #eef2f7 100%)', padding: '18px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px 30px', fontFamily: "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif" }}>
       <main style={{ maxWidth: 420, margin: '0 auto', display: 'grid', gap: 14 }}>
         <section style={{ ...cardStyle, padding: 20 }}>
-          <p style={{ margin: 0, color: '#6b7da7', fontWeight: 900, fontSize: 12, letterSpacing: '0.08em' }}>5-YEAR ASSET ROADMAP</p>
+          <p style={{ margin: 0, color: '#7f95be', fontWeight: 700, fontSize: 11, letterSpacing: '0.08em' }}>5-YEAR ASSET ROADMAP</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10, marginTop: 4 }}>
-            <h1 style={{ margin: 0, fontSize: 45, lineHeight: 1.1, color: '#101c3f', fontWeight: 900, fontFamily: displayFont, letterSpacing: '-0.01em' }}>
+            <h1 style={{ margin: 0, fontSize: 38, lineHeight: 1.15, color: '#101c3f', fontWeight: 800, fontFamily: displayFont, letterSpacing: '-0.01em' }}>
               {name} 님의
               <br />
               미래 자산 등고선
             </h1>
             <div style={{ borderRadius: 14, border: '1px solid #d5deef', background: '#f6f9ff', padding: '8px 10px', textAlign: 'center' }}>
               <p style={{ margin: 0, fontSize: 11, color: '#8693b0', fontWeight: 700 }}>목표 도달률</p>
-              <p style={{ margin: '2px 0 0', color: '#3d66df', fontSize: 28, fontWeight: 900 }}>{snapshot.achievementRate}%</p>
+              <p style={{ margin: '2px 0 0', color: selectedOptionColor, fontSize: 28, fontWeight: 900 }}>{snapshot.achievementRate}%</p>
             </div>
           </div>
           <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
@@ -172,7 +174,7 @@ const FinalAnalysis = () => {
               return (
                 <article key={item.year} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
                   <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                    <div style={{ width: 28, height: 28, borderRadius: 8, background: idx === 0 ? '#5b63ff' : '#f2f5fb', color: idx === 0 ? '#fff' : '#91a0c2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 12 }}>
+                    <div style={{ width: 28, height: 28, borderRadius: 8, background: idx === 0 ? selectedOptionColor : '#f2f5fb', color: idx === 0 ? '#fff' : '#91a0c2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: 12 }}>
                       {idx + 1}
                     </div>
                     <div>
@@ -181,7 +183,7 @@ const FinalAnalysis = () => {
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <p style={{ margin: 0, color: '#1f3c8f', fontWeight: 900, fontSize: 26 }}>{formatAsset(item.asset)}</p>
+                    <p style={{ margin: 0, color: '#1f2a40', fontWeight: 900, fontSize: 26 }}>{formatAsset(item.asset)}</p>
                     <p style={{ margin: '2px 0 0', color: '#2fb481', fontWeight: 800, fontSize: 12 }}>+{Math.round(item.increase / 1000000).toLocaleString()}만 증가</p>
                   </div>
                 </article>

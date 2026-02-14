@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Mail } from 'lucide-react';
+import { ArrowLeft, Mail } from 'lucide-react';
 
 interface CheckupRouteState {
   answers?: Record<string, unknown>;
@@ -8,7 +8,9 @@ interface CheckupRouteState {
 }
 
 const cycleOptions = [3, 6, 12] as const;
-const displayFont = "'Cormorant Garamond', 'Noto Serif KR', 'Times New Roman', serif";
+const displayFont = "'Pretendard', 'SUIT', 'Noto Sans KR', sans-serif";
+const selectedOptionColor = '#1e2a3a';
+const selectedOptionShadow = '0 8px 25px rgba(30, 42, 58, 0.25)';
 
 const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -39,17 +41,26 @@ const CheckupConsent = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#2f67d8', padding: '18px 14px 28px', fontFamily: "'Pretendard', 'SUIT', sans-serif", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <main style={{ width: '100%', maxWidth: 430, background: 'rgba(255,255,255,0.06)', borderRadius: 28, border: '1px solid rgba(255,255,255,0.25)', padding: '26px 18px 22px', color: '#fff' }}>
-        <div style={{ width: 92, height: 92, borderRadius: 999, background: 'rgba(255,255,255,0.13)', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Mail size={48} />
+    <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: '16px 14px 28px', fontFamily: "'Pretendard', 'SUIT', sans-serif", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <main style={{ width: '100%', maxWidth: 430, background: '#ffffff', borderRadius: 20, border: '1px solid #e2e8f4', padding: '20px 16px 18px', color: '#2a3a58', boxShadow: '0 10px 24px rgba(37, 64, 110, 0.06)' }}>
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          aria-label="뒤로 가기"
+          style={{ width: 34, height: 34, borderRadius: 999, border: '1px solid #dfe7f4', background: '#fff', color: '#5e7497', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+        >
+          <ArrowLeft size={16} />
+        </button>
+
+        <div style={{ width: 78, height: 78, borderRadius: 999, background: '#edf4ff', margin: '10px auto 0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4c8fe9' }}>
+          <Mail size={40} />
         </div>
 
-        <h1 style={{ margin: '18px 0 0', textAlign: 'center', fontSize: 42, lineHeight: 1.2, fontWeight: 900, fontFamily: displayFont }}>페이스메이커가
+        <h1 style={{ margin: '16px 0 0', textAlign: 'center', fontSize: 32, lineHeight: 1.24, fontWeight: 800, fontFamily: displayFont, color: '#1d3154' }}>페이스메이커가
           <br />
           되어드리겠습니다.
         </h1>
-        <p style={{ margin: '10px 0 0', textAlign: 'center', fontSize: 17, lineHeight: 1.5, color: '#dce6ff' }}>
+        <p style={{ margin: '10px 0 0', textAlign: 'center', fontSize: 15, lineHeight: 1.5, color: '#667da4' }}>
           {cycleMonths}개월마다 {name} 님의 동반 경로를 점검해 드리겠습니다.
           <br />
           지금 이메일을 등록하시면 점검 리포트를 발송해 드리겠습니다.
@@ -65,12 +76,14 @@ const CheckupConsent = () => {
                 onClick={() => setCycleMonths(cycle)}
                 style={{
                   borderRadius: 12,
-                  border: active ? '1.5px solid #ffffff' : '1px solid rgba(255,255,255,0.45)',
-                  background: active ? 'rgba(8,20,56,0.4)' : 'rgba(255,255,255,0.06)',
-                  color: '#fff',
-                  fontWeight: 800,
+                  border: active ? `1px solid ${selectedOptionColor}` : '1px solid #dce5f2',
+                  background: active ? selectedOptionColor : '#fff',
+                  color: active ? '#ffffff' : '#4a5f82',
+                  fontWeight: 700,
                   padding: '10px 0',
                   cursor: 'pointer',
+                  boxShadow: active ? selectedOptionShadow : 'none',
+                  transition: 'all 0.2s ease',
                 }}
               >
                 {cycle}개월
@@ -88,13 +101,13 @@ const CheckupConsent = () => {
             marginTop: 14,
             width: '100%',
             boxSizing: 'border-box',
-            border: 'none',
-            borderRadius: 20,
+            border: '1px solid #dbe4f2',
+            borderRadius: 14,
             background: '#fff',
             color: '#1b2d55',
-            fontSize: 18,
-            fontWeight: 700,
-            padding: '17px 16px',
+            fontSize: 16,
+            fontWeight: 600,
+            padding: '14px 14px',
             outline: 'none',
           }}
         />
@@ -107,13 +120,14 @@ const CheckupConsent = () => {
             marginTop: 12,
             width: '100%',
             border: 'none',
-            borderRadius: 20,
-            background: canSubmit && !submitted ? '#0c1a42' : '#8093c7',
+            borderRadius: 14,
+            background: canSubmit && !submitted ? selectedOptionColor : '#b8c7df',
             color: '#fff',
-            fontWeight: 900,
-            fontSize: 19,
-            padding: '16px 14px',
+            fontWeight: 700,
+            fontSize: 16,
+            padding: '14px 14px',
             cursor: canSubmit && !submitted ? 'pointer' : 'not-allowed',
+            boxShadow: canSubmit && !submitted ? selectedOptionShadow : undefined,
           }}
         >
           {submitted ? '동의 완료' : '점검 동의 및 동반 시작'}
@@ -125,12 +139,12 @@ const CheckupConsent = () => {
           style={{
             marginTop: 10,
             width: '100%',
-            border: '1px solid rgba(255,255,255,0.45)',
+            border: '1px solid #dbe3f1',
             borderRadius: 20,
-            background: 'transparent',
-            color: '#fff',
-            fontWeight: 700,
-            fontSize: 15,
+            background: '#fff',
+            color: '#3b5073',
+            fontWeight: 600,
+            fontSize: 14,
             padding: '11px 14px',
             cursor: 'pointer',
           }}
