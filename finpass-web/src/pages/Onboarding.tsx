@@ -185,16 +185,19 @@ const Onboarding = () => {
             <div
                 style={{
                     position: 'absolute',
-                    top: 80,
+                    top: 84,
                     bottom: 0,
                     left: 0,
                     right: 0,
                     zIndex: 45,
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    paddingLeft: 24,
-                    paddingRight: 24,
+                    paddingLeft: 16,
+                    paddingRight: 16,
+                    paddingBottom: 'calc(14px + env(safe-area-inset-bottom))',
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    WebkitOverflowScrolling: 'touch',
                 }}
             >
                 <AnimatePresence mode="wait" custom={direction}>
@@ -210,19 +213,22 @@ const Onboarding = () => {
                             maxWidth: 420,
                             display: 'flex',
                             flexDirection: 'column',
-                            margin: 'auto 0',
+                            minHeight: '100%',
+                            margin: '0 auto',
+                            paddingTop: 8,
                         }}
                     >
-                        {/* 질문 헤딩 */}
-                        <div style={{ marginBottom: 12, textAlign: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                            {/* 질문 헤딩 */}
+                            <div style={{ marginBottom: 10, textAlign: 'center' }}>
                             {step.titleLines.map((line, idx) => (
                                 <div
                                     key={idx}
                                     style={{
-                                        fontSize: line.highlight ? 22 : 19,
+                                        fontSize: line.highlight ? 'clamp(20px, 5vw, 22px)' : 'clamp(17px, 4.2vw, 19px)',
                                         fontWeight: 700,
                                         color: line.highlight ? ACCENT : '#1a1a2e',
-                                        lineHeight: 1.45,
+                                        lineHeight: 1.34,
                                         letterSpacing: '-0.02em',
                                         wordBreak: 'keep-all',
                                     }}
@@ -233,124 +239,137 @@ const Onboarding = () => {
                             <p style={{
                                 color: '#999',
                                 fontSize: 12,
-                                lineHeight: 1.6,
-                                marginTop: 6,
+                                lineHeight: 1.5,
+                                marginTop: 5,
                                 whiteSpace: 'pre-line',
                             }}>
                                 {step.subtitle}
                             </p>
-                        </div>
-
-                        {/* 아이템 카드 */}
-                        {step.layout === 'list' ? (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                                {step.items.map((item, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                                        transition={{ delay: 0.1 + idx * 0.08, type: 'spring', stiffness: 300, damping: 25 }}
-                                        style={{
-                                            background: '#ffffff',
-                                            border: '1px solid #e5e7eb',
-                                            borderRadius: 14,
-                                            padding: '11px 16px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: 12,
-                                            boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-                                        }}
-                                    >
-                                        <span style={{ color: ACCENT, flexShrink: 0 }}>{item.icon}</span>
-                                        <span style={{
-                                            fontSize: 14,
-                                            fontWeight: 600,
-                                            color: '#2c2c3a',
-                                            letterSpacing: '-0.01em',
-                                        }}>
-                                            {item.text}
-                                        </span>
-                                    </motion.div>
-                                ))}
                             </div>
-                        ) : (
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
-                                {step.items.map((item, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                                        transition={{ delay: 0.1 + idx * 0.08, type: 'spring', stiffness: 300, damping: 25 }}
-                                        style={{
-                                            background: '#ffffff',
-                                            border: '1px solid #e5e7eb',
-                                            borderRadius: 14,
-                                            padding: '14px 12px',
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                            gap: 6,
-                                            boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
-                                        }}
-                                    >
-                                        <span style={{ color: ACCENT }}>{item.icon}</span>
-                                        <span style={{
-                                            fontSize: 13,
-                                            fontWeight: 600,
-                                            color: '#2c2c3a',
-                                            textAlign: 'center',
-                                            letterSpacing: '-0.01em',
-                                            lineHeight: 1.4,
-                                        }}>
-                                            {item.text}
-                                        </span>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        )}
 
-                        {/* 하단 안내 텍스트 */}
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.5 }}
-                            style={{
-                                textAlign: 'center',
-                                color: '#bbb',
-                                fontSize: 11,
-                                marginTop: 10,
-                                letterSpacing: '-0.01em',
-                            }}
-                        >
-                            {step.footerText}
-                        </motion.p>
+                            {/* 아이템 카드 */}
+                            {step.layout === 'list' ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                                    {step.items.map((item, idx) => (
+                                        <motion.div
+                                            key={idx}
+                                            initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            transition={{ delay: 0.1 + idx * 0.08, type: 'spring', stiffness: 300, damping: 25 }}
+                                            style={{
+                                                background: '#ffffff',
+                                                border: '1px solid #e5e7eb',
+                                                borderRadius: 14,
+                                                padding: '10px 14px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: 10,
+                                                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                                            }}
+                                        >
+                                            <span style={{ color: ACCENT, flexShrink: 0 }}>{item.icon}</span>
+                                            <span style={{
+                                                fontSize: 14,
+                                                fontWeight: 600,
+                                                color: '#2c2c3a',
+                                                letterSpacing: '-0.01em',
+                                            }}>
+                                                {item.text}
+                                            </span>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
+                                    {step.items.map((item, idx) => (
+                                        <motion.div
+                                            key={idx}
+                                            initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            transition={{ delay: 0.1 + idx * 0.08, type: 'spring', stiffness: 300, damping: 25 }}
+                                            style={{
+                                                background: '#ffffff',
+                                                border: '1px solid #e5e7eb',
+                                                borderRadius: 14,
+                                                padding: '12px 10px',
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center',
+                                                gap: 6,
+                                                boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+                                            }}
+                                        >
+                                            <span style={{ color: ACCENT }}>{item.icon}</span>
+                                            <span style={{
+                                                fontSize: 13,
+                                                fontWeight: 600,
+                                                color: '#2c2c3a',
+                                                textAlign: 'center',
+                                                letterSpacing: '-0.01em',
+                                                lineHeight: 1.4,
+                                            }}>
+                                                {item.text}
+                                            </span>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            )}
 
-                        {/* CTA 버튼 */}
-                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16 }}>
-                            <motion.button
-                                onClick={goNext}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.97 }}
+                            {/* 하단 안내/CTA: sticky로 항상 접근 가능 */}
+                            <div
                                 style={{
-                                    background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT}dd)`,
-                                    border: 'none',
-                                    borderRadius: 12,
-                                    padding: '12px 36px',
-                                    color: 'white',
-                                    fontSize: 15,
-                                    fontWeight: 700,
-                                    cursor: 'pointer',
-                                    boxShadow: `0 4px 15px ${ACCENT}25`,
-                                    fontFamily: "'Pretendard', sans-serif",
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 8,
-                                    transition: 'all 0.2s ease',
+                                    position: 'sticky',
+                                    bottom: 0,
+                                    marginTop: 'auto',
+                                    paddingTop: 10,
+                                    background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, #ffffff 36%, #ffffff 100%)',
                                 }}
                             >
-                                {step.cta}
-                                <ArrowRight style={{ width: 16, height: 16 }} />
-                            </motion.button>
+                                <motion.p
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.5 }}
+                                    style={{
+                                        textAlign: 'center',
+                                        color: '#a1a7b3',
+                                        fontSize: 11,
+                                        marginTop: 0,
+                                        marginBottom: 8,
+                                        letterSpacing: '-0.01em',
+                                    }}
+                                >
+                                    {step.footerText}
+                                </motion.p>
+
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <motion.button
+                                        onClick={goNext}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.97 }}
+                                        style={{
+                                            background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT}dd)`,
+                                            border: 'none',
+                                            borderRadius: 12,
+                                            padding: '12px 30px',
+                                            color: 'white',
+                                            fontSize: 15,
+                                            fontWeight: 700,
+                                            cursor: 'pointer',
+                                            boxShadow: `0 4px 15px ${ACCENT}25`,
+                                            fontFamily: "'Pretendard', sans-serif",
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 8,
+                                            transition: 'all 0.2s ease',
+                                            minWidth: 146,
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {step.cta}
+                                        <ArrowRight style={{ width: 16, height: 16 }} />
+                                    </motion.button>
+                                </div>
+                            </div>
                         </div>
                     </motion.div>
                 </AnimatePresence>
