@@ -324,12 +324,12 @@ const Onboarding = () => {
             {/* === 하단 고정 CTA: 모바일에서도 항상 노출 === */}
             <div
                 style={{
-                    position: 'fixed',
+                    position: 'absolute',
                     left: 0,
                     right: 0,
                     bottom: 0,
                     zIndex: 60,
-                    padding: '10px 16px calc(12px + env(safe-area-inset-bottom))',
+                    padding: '10px 16px calc(18px + env(safe-area-inset-bottom))',
                     background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, #ffffff 32%, #ffffff 100%)',
                     pointerEvents: 'none',
                 }}

@@ -50,7 +50,7 @@ const CheckupConsent = () => {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f4f6fa', padding: isMobile ? '16px 14px calc(124px + env(safe-area-inset-bottom))' : '16px 14px 34px', fontFamily: "'Pretendard', 'SUIT', sans-serif" }}>
-      <main style={{ width: '100%', maxWidth: 430, margin: '0 auto', background: '#ffffff', borderRadius: 20, border: '1px solid #e2e8f4', padding: '20px 16px 18px', color: '#2a3a58', boxShadow: '0 10px 24px rgba(37, 64, 110, 0.06)' }}>
+      <main style={{ width: '100%', maxWidth: 430, margin: '0 auto', boxSizing: 'border-box', background: '#ffffff', borderRadius: 20, border: '1px solid #e2e8f4', padding: '20px 16px 18px', color: '#2a3a58', boxShadow: '0 10px 24px rgba(37, 64, 110, 0.06)' }}>
         <button
           type="button"
           onClick={() => navigate(-1)}
