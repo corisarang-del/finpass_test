@@ -194,7 +194,7 @@ const Onboarding = () => {
                     flexDirection: 'column',
                     paddingLeft: 16,
                     paddingRight: 16,
-                    paddingBottom: 'calc(14px + env(safe-area-inset-bottom))',
+                    paddingBottom: 'calc(116px + env(safe-area-inset-bottom))',
                     overflowY: 'auto',
                     overflowX: 'hidden',
                     WebkitOverflowScrolling: 'touch',
@@ -315,64 +315,66 @@ const Onboarding = () => {
                                 </div>
                             )}
 
-                            {/* 하단 안내/CTA: sticky로 항상 접근 가능 */}
-                            <div
-                                style={{
-                                    position: 'sticky',
-                                    bottom: 0,
-                                    marginTop: 'auto',
-                                    paddingTop: 10,
-                                    background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, #ffffff 36%, #ffffff 100%)',
-                                }}
-                            >
-                                <motion.p
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.5 }}
-                                    style={{
-                                        textAlign: 'center',
-                                        color: '#a1a7b3',
-                                        fontSize: 11,
-                                        marginTop: 0,
-                                        marginBottom: 8,
-                                        letterSpacing: '-0.01em',
-                                    }}
-                                >
-                                    {step.footerText}
-                                </motion.p>
-
-                                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <motion.button
-                                        onClick={goNext}
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.97 }}
-                                        style={{
-                                            background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT}dd)`,
-                                            border: 'none',
-                                            borderRadius: 12,
-                                            padding: '12px 30px',
-                                            color: 'white',
-                                            fontSize: 15,
-                                            fontWeight: 700,
-                                            cursor: 'pointer',
-                                            boxShadow: `0 4px 15px ${ACCENT}25`,
-                                            fontFamily: "'Pretendard', sans-serif",
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: 8,
-                                            transition: 'all 0.2s ease',
-                                            minWidth: 146,
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        {step.cta}
-                                        <ArrowRight style={{ width: 16, height: 16 }} />
-                                    </motion.button>
-                                </div>
-                            </div>
                         </div>
                     </motion.div>
                 </AnimatePresence>
+            </div>
+
+            {/* === 하단 고정 CTA: 모바일에서도 항상 노출 === */}
+            <div
+                style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 60,
+                    padding: '10px 16px calc(12px + env(safe-area-inset-bottom))',
+                    background: 'linear-gradient(180deg, rgba(255,255,255,0) 0%, #ffffff 32%, #ffffff 100%)',
+                }}
+            >
+                <motion.p
+                    key={`footer-${currentStep}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                    style={{
+                        textAlign: 'center',
+                        color: '#a1a7b3',
+                        fontSize: 11,
+                        margin: '0 0 8px',
+                        letterSpacing: '-0.01em',
+                    }}
+                >
+                    {step.footerText}
+                </motion.p>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <motion.button
+                        onClick={goNext}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.97 }}
+                        style={{
+                            background: `linear-gradient(135deg, ${ACCENT}, ${ACCENT}dd)`,
+                            border: 'none',
+                            borderRadius: 12,
+                            padding: '12px 30px',
+                            color: 'white',
+                            fontSize: 15,
+                            fontWeight: 700,
+                            cursor: 'pointer',
+                            boxShadow: `0 4px 15px ${ACCENT}25`,
+                            fontFamily: "'Pretendard', sans-serif",
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 8,
+                            transition: 'all 0.2s ease',
+                            minWidth: 146,
+                            justifyContent: 'center',
+                        }}
+                    >
+                        {step.cta}
+                        <ArrowRight style={{ width: 16, height: 16 }} />
+                    </motion.button>
+                </div>
             </div>
         </div>
     );
