@@ -9,6 +9,26 @@ import 부동산Image from '../assets/images/부동산.jpg';
 import 기초자산Image from '../assets/images/기초자산.jpg';
 import 주식Image from '../assets/images/주식.jpg';
 import 라이프Image from '../assets/images/라이프.jpg';
+import agentHanImg from '../assets/images/agent_han.png';
+import agentSongImg from '../assets/images/agent_song.png';
+import agentChoiImg from '../assets/images/agent_choi.png';
+import agentYouImg from '../assets/images/agent_you.png';
+
+// JS 모듈 로드 즉시 홈/카테고리 이미지 병렬 프리로드 (React 마운트 이전 실행)
+if (typeof window !== 'undefined') {
+  [home1, home2, home3, 부동산Image, 기초자산Image, 주식Image, 라이프Image].forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+}
+
+// 카테고리별 에이전트 이미지 매핑
+const AGENT_IMAGES: Record<string, string> = {
+  'real-estate': agentHanImg,
+  'insurance': agentSongImg,
+  'stock': agentChoiImg,
+  'life-balance': agentYouImg,
+};
 
 // 렌더마다 새 참조 생성을 막기 위해 컴포넌트 외부에 선언
 const CATEGORIES = [
@@ -297,6 +317,11 @@ const Home = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: dur(0.3 + idx * 0.08), duration: dur(0.55), ease: 'easeOut' }}
                   whileHover={shouldReduceMotion ? {} : { y: -8, transition: { duration: 0.2, ease: 'easeOut' } }}
+                  onPointerEnter={() => {
+                    // 호버 시 해당 에이전트 이미지 미리 로드 (Wizard 진입 전 캐시 확보)
+                    const img = new Image();
+                    img.src = AGENT_IMAGES[cat.id];
+                  }}
                   onClick={() => navigate(`/wizard?category=${cat.id}`)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
